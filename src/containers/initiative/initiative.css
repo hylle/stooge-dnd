@@ -1,0 +1,75 @@
+.initiative {
+	display: flex;
+	flex-direction: row;
+	height: 100vh;
+}
+
+.initiative__tracker {
+	flex: 0 0 300px;
+	display: flex;
+	flex-direction: column;
+	background: #fff;
+	border-right: 1px solid #bebebe;
+}
+
+.initiative__tracker__actions {
+	display: flex;
+	height: 50px;
+}
+
+.initiative__tracker__actions button {
+	display: flex;
+	flex: 0 0 50px;
+	align-items: center;
+	justify-content: center;
+	background-color: tomato;
+	font-weight: 700;
+	text-transform: uppercase;
+	border: 0;
+	border-right: 1px solid rgb(226, 44, 12);
+	outline: 0;
+
+	cursor: pointer;
+}
+
+.initiative__tracker__actions img {
+	width: 40px;
+	height: 40px;
+}
+
+.initiative__tracker__list {
+	list-style-type: none;
+	display: flex;
+	flex-direction: column;
+	width: 100%;
+	padding: 0;
+	margin: 0;
+}
+
+.initiative__tracker__item {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding-left: 20px;
+	padding-right: 20px;
+	margin-top: -1px;
+	width: 100%;
+	height: 50px;
+
+	background: #fff;
+	border-top: 1px solid #bebebe;
+	border-bottom: 1px solid #bebebe;
+}
+
+.initiative__tracker__item button {
+	display: block;
+	border: 1px solid #bebebe;
+}
+
+.initiative__tracker__item.dragging {
+	/* border: 1px solid #bebebe; */
+}
+
+.initiative__tracker__item:last-child {
+	border-bottom: 1px solid #bebebe;
+}
