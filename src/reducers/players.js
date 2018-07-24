@@ -45,7 +45,6 @@ function addPlayers(state, players) {
 
 function removePlayer(state, playerIndex) {
 	let players = [...state.items];
-	console.log({ playerIndex });
 	if (playerIndex > -1 && playerIndex < state.items.length) {
 		players.splice(playerIndex, 1);
 
