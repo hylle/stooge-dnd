@@ -1,7 +1,49 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import { connect } from 'react-redux';
 
 import './monsterstats.css';
+
+const CR_TO_XP_TABLE = {
+	0: 10,
+	.125: 25,
+	.25: 50,
+	.5: 100,
+	1: 200,
+	2: 450,
+	3: 700,
+	4: 1100,
+	5: 1800,
+	6: 2300,
+	7: 2900,
+	8: 3900,
+	9: 5000,
+	10: 5900,
+	11: 7200,
+	12: 8400,
+	13: 10000,
+	14: 11500,
+	15: 13000,
+	16: 15000,
+	17: 18000,
+	18: 20000,
+	19: 22000,
+	20: 25000,
+	21: 33000,
+	22: 41000,
+	23: 50000,
+	24: 62000,
+	25: 75000,
+	26: 90000,
+	27: 105000,
+	28: 120000,
+	29: 135000,
+	30: 155000,
+};
+
+const CR2XP = (cr) => {
+	const xp = CR_TO_XP_TABLE[cr];
+	return xp !== undefined ? `${cr} (${xp} XP)` : 'Unknown';
+}
 
 const SKILLS = [
 	'athletics',
@@ -52,11 +94,20 @@ const calcModifier = (stat = 10) => {
 	return transformModifier(modifier);
 };
 
-const joinStats = (title, data, stats = [], names = []) => {
+const PLAIN_VALUE_FORMATTER = (name, value) => (value);
+const joinStats = (
+	title,
+	data,
+	stats = [],
+	names = [],
+	formatter = (name, value) => {
+		return `${name} ${transformModifier(value)}`;
+	},
+) => {
 	const joinedStats = stats.reduce((prev, curr, index) => {
 		if (data[curr]) {
 			const name = names[index];
-			prev.push(`${name} ${transformModifier(data[curr])}`);
+			prev.push(formatter(name, data[curr]));
 			return prev;
 		}
 
@@ -66,7 +117,7 @@ const joinStats = (title, data, stats = [], names = []) => {
 	if (joinedStats.length) {
 		return (
 			<div>
-				<strong>{title}:</strong>
+				<strong>{title}</strong>
 				{' '}
 				{joinedStats}
 			</div>
@@ -75,6 +126,11 @@ const joinStats = (title, data, stats = [], names = []) => {
 
 	return null;
 };
+
+const keyToNameFormatter = (key) => {
+	const spacedStr = key.replace('_', ' ');
+	return spacedStr.charAt(0).toUpperCase() + spacedStr.slice(1);
+}
 
 const MonsterStats = ({ monster }) => {
 	if (!monster) {
@@ -111,7 +167,12 @@ const MonsterStats = ({ monster }) => {
 					<tbody>
 						<tr>
 							{[
-								'strength', 'dexterity', 'constitution', 'intelligence', 'wisdom', 'charisma',
+								'strength',
+								'dexterity',
+								'constitution',
+								'intelligence',
+								'wisdom',
+								'charisma',
 							].map((ability) => (
 								<td key={ability}>
 									{stats[ability]} ({calcModifier(stats[ability])})
@@ -131,18 +192,56 @@ const MonsterStats = ({ monster }) => {
 						'intelligence_save',
 						'wisdom_save',
 						'charisma_save',
-					], [
-						'Str',
-						'Dex',
-						'Con',
-						'Int',
-						'Wis',
-						'Cha',
-					])}
+					], [ 'Str', 'Dex', 'Con', 'Int', 'Wis', 'Cha'])}
 				</div>
 				<div>
 					{joinStats('Skills', stats, SKILLS, SKILLS_NAMES)}
 				</div>
+				{[
+					'damage_vulnerabilities',
+					'damage_resistances',
+					'damage_immunities',
+					'condition_immunities',
+					'senses',
+					'languages',
+				].map((key) => (
+					<div key={key}>
+						{joinStats(
+							keyToNameFormatter(key),
+							stats,
+							[key],
+							[],
+							PLAIN_VALUE_FORMATTER,
+						)}
+					</div>
+				))}
+
+				<div>
+					{joinStats(
+						'Challenge',
+						stats,
+						['challenge_rating'],
+						[],
+						(name, value) => (CR2XP(value)),
+					)}
+				</div>
+
+				{['special_abilities', 'actions', 'legendary_actions'].map((section) => stats[section] ? (
+					<Fragment key={section}>
+						<hr/>
+						<div>
+							<h4>{keyToNameFormatter(section)}</h4>
+
+							{stats[section].map((action, i) => (
+								<div key={i}>
+									<em><strong>{action.name}</strong></em>
+									{' '}
+									{action.desc}
+								</div>
+							))}
+						</div>
+					</Fragment>
+				) : null)}
 		</div>
 	);
 };

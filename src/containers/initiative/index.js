@@ -4,6 +4,7 @@ import { push } from 'connected-react-router';
 import { connect } from 'react-redux';
 import {SortableContainer, SortableElement } from 'react-sortable-hoc';
 import { Link } from 'react-router-dom';
+import classnames from 'classnames';
 import { PLAYERS_ADD, PLAYERS_REMOVE, PLAYERS_MOVE } from '../../reducers/players';
 import MonsterStats from '../../components/monsterstats';
 
@@ -13,12 +14,19 @@ import IconSwordman from './swordman.svg';
 import './initiative.css';
 
 const SortableItem = SortableElement(({ value, remove, goto }) =>
-	<li className="initiative__tracker__item">
+	<li
+		className={classnames({
+			"initiative__tracker__item": true,
+			"initiative__tracker__item--clickable": value.stats,
+		})}
+		onClick={(e) => {
+			if (value.stats) {
+				goto(`/initiative/${value.stats._id}`);
+			}
+		}}
+	>
 		{value.name}
 		<span>
-			{value.stats && (
-				<button onClick={() => goto(`/initiative/${value.stats._id}`)}>i</button>
-			)}
 			<button onClick={remove}>-</button>
 		</span>
 	</li>
@@ -51,6 +59,7 @@ class InitiativeTracker extends Component {
 					<SortableList
 						items={players.items}
 						onSortEnd={this.onSortEnd}
+						distance={2}
 						remove={this.removePlayer}
 						goto={(url) => dispatch(push(url))}
 						lockAxis="y"

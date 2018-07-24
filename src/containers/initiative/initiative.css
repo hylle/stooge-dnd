@@ -61,13 +61,28 @@
 	background: #fff;
 	border-top: 1px solid #333;
 	border-bottom: 1px solid #333;
+
+	cursor: move;
+}
+
+.initiative__tracker__item--clickable {
+	cursor: pointer;
+}
+
+.initiative__tracker__item.dragging {
+	cursor: move;
 }
 
 .initiative__tracker__item button {
-	display: block;
+	display: inline-block;
 	border: 1px solid #333;
+	font-family: monospace;
+	font-size: 16px;
+	font-weight: 700;
+
 
 	outline: 0;
+	margin-left: 5px;
 }
 
 .initiative__tracker__item.dragging {
