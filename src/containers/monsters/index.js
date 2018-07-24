@@ -1,8 +1,11 @@
 import React, { Component, Fragment } from 'react';
+import { connect } from 'react-redux';
 import filter from 'lodash/filter';
 
-import monsters from '../../monsters.json';
+import monstersData from '../../monsters.json';
 import './monsters.css';
+import { PLAYERS_ADD } from '../../reducers/players';
+import { MONSTERS_ADD } from '../../reducers/monsters';
 
 const RAINBOW = 'linear-gradient(to top left, #e81123, #e81123 17%, #f7941d 17%, #f7941d 34%, #fff100 34%, #fff100 51%, #00a650 51%, #00a650 68%, #0054a5 68%, #0054a5 85%, #672d93 85%, #672d93)';
 const colors = {
@@ -40,6 +43,7 @@ class MonsterLookup extends Component {
 							<div
 								className="monsterlookup__monsterlist__item__content"
 								style={this.getColorFromName(monster.name)}
+								onClick={this.createAddPlayers(monster.url)}
 							>
 								{monster.name.split(' ').map((namePart, i) => (
 									<Fragment key={i}>
@@ -86,7 +90,7 @@ class MonsterLookup extends Component {
 
 	filterMonsters = () => {
 		const { search } = this.state;
-		let filteredMonsters = monsters.results;
+		let filteredMonsters = monstersData.results;
 		if (search) {
 			filteredMonsters = filter(filteredMonsters, (monster) => {
 				return monster.name.toLowerCase().indexOf(search.toLowerCase()) !== -1;
@@ -102,6 +106,39 @@ class MonsterLookup extends Component {
 			search: e.target.value,
 		})
 	}
+
+	createMonsterAddPlayerAction = (monsterData) => ({
+			type: PLAYERS_ADD,
+			players: [
+				{
+					name: monsterData.name,
+					stats: monsterData,
+				},
+			],
+	});
+
+	createAddPlayers = (monsterUrl) => () => {
+		const { dispatch, monsters } = this.props;
+
+		const cachedMonster = monsters.items[monsterUrl];
+		if (cachedMonster && cachedMonster._id) {
+			dispatch(this.createMonsterAddPlayerAction(cachedMonster));
+		} else {
+			fetch(monsterUrl).then((res) => {
+				res.json().then((data) => {
+					if (data && data.name) {
+						dispatch({
+							type: MONSTERS_ADD,
+							id: data._id,
+							data,
+						});
+						dispatch(this.createMonsterAddPlayerAction(data));
+					}
+				});
+			});
+		}
+
+	}
 }
 
-export default MonsterLookup;
+export default connect((state) => state)(MonsterLookup);

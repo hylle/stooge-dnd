@@ -1,25 +1,34 @@
 import React, { Component } from 'react';
+import { Switch, Route } from 'react-router'
+import { push } from 'connected-react-router';
 import { connect } from 'react-redux';
 import {SortableContainer, SortableElement } from 'react-sortable-hoc';
+import { Link } from 'react-router-dom';
 import { PLAYERS_ADD, PLAYERS_REMOVE, PLAYERS_MOVE } from '../../reducers/players';
+import MonsterStats from '../../components/monsterstats';
 
-import Monsters from '../../monsters.json';
 import IconMinotaur from './minotaur.svg';
 import IconSwordman from './swordman.svg';
 
 import './initiative.css';
 
-const SortableItem = SortableElement(({ value, remove }) =>
+const SortableItem = SortableElement(({ value, remove, goto }) =>
 	<li className="initiative__tracker__item">
-		{value.name} <button onClick={remove}>-</button>
+		{value.name}
+		<span>
+			{value.stats && (
+				<button onClick={() => goto(`/initiative/${value.stats._id}`)}>i</button>
+			)}
+			<button onClick={remove}>-</button>
+		</span>
 	</li>
 );
 
-const SortableList = SortableContainer(({ items, remove }) => {
+const SortableList = SortableContainer(({ items, remove, goto }) => {
 	return (
 		<ol className="initiative__tracker__list">
 			{items.map((value, index) => (
-				<SortableItem key={`item-${index}`} index={index} value={value} remove={() => remove(index)} />
+				<SortableItem key={`item-${index}`} index={index} value={value} remove={() => remove(index)} goto={goto} />
 			))}
 		</ol>
 	);
@@ -27,22 +36,31 @@ const SortableList = SortableContainer(({ items, remove }) => {
 
 class InitiativeTracker extends Component {
 	render() {
-		const { players } = this.props;
+		const { players, dispatch } = this.props;
 		return (
 			<div className="initiative">
 				<div className="initiative__tracker">
 					<div className="initiative__tracker__actions">
-						<button onClick={this.addPlayers}>
+						<button onClick={this.addPlayers} className="initiative__tracker__actions__button">
 							<img src={IconSwordman} alt="" />
 						</button>
-						<button onClick={this.addPlayers}>
+						<Link to="/monsters" className="initiative__tracker__actions__button">
 							<img src={IconMinotaur} alt="" />
-						</button>
+						</Link>
 					</div>
-					<SortableList items={players.items} onSortEnd={this.onSortEnd} remove={this.removePlayer} lockAxis="y" helperClass="dragging" />
+					<SortableList
+						items={players.items}
+						onSortEnd={this.onSortEnd}
+						remove={this.removePlayer}
+						goto={(url) => dispatch(push(url))}
+						lockAxis="y"
+						helperClass="dragging"
+					/>
 				</div>
 				<div className="initiative__info">
-					Monster stats
+					<Switch>
+						<Route path="/initiative/:id" component={MonsterStats}/>
+					</Switch>
 				</div>
 			</div>
 		);
