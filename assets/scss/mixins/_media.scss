@@ -1,0 +1,45 @@
+// Single bp: @include media('tablet')
+// Multiple bps: @include media('mobile-ab', 'tablet')
+// Directly bp/bps: @include media('(min-width: 568px) and (max-width: 1350px)')
+// Custom added $breakpoints, can be reference to key in $base-breakpoints: $breakpoints: ('custom': 'mobile');
+
+@mixin media($bp-keys...) {
+	$bps: ();
+	@each $bp-key in $bp-keys {
+		@if map-has-key($base-breakpoints, $bp-key) {
+			$bps: append($bps, map-get($base-breakpoints, $bp-key));
+		} @else if map-has-key($breakpoints, $bp-key) {
+			$bp: map-get($breakpoints, $bp-key);
+			@if map-has-key($base-breakpoints, $bp) { // $bp is key in $base-breakpoint
+				$bps: append($bps, map-get($base-breakpoints, $bp));
+			} @else {
+				$bps: append($bps, map-get($breakpoints, $bp-key));
+			}
+		} @else {
+			// $bp-key is actual bp
+			$bps: append($bps, $bp-key);
+		}
+	}
+
+	$bps: implode($bps, ', ');
+
+	@media #{$bps} {
+		@content;
+	}
+}
+
+@function implode($pieces, $glue: '') {
+	$result: null;
+	@for $i from 1 through length($pieces) {
+		$piece: nth($pieces, $i);
+		@if type-of($piece) == list {
+			$result: unquote("#{$result}#{$glue}#{implode($piece, $glue)}");
+		} @else {
+			$result: unquote("#{$result}#{$glue}#{$piece}");
+		}
+	}
+	@if $result != null {
+		$result: str-slice($result, str-length($glue) + 1, -1);
+	}
+	@return $result;
+}

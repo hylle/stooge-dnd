@@ -18,6 +18,8 @@ const SortableItem = SortableElement(({ value, remove, goto }) =>
 		className={classnames({
 			"initiative__tracker__item": true,
 			"initiative__tracker__item--clickable": value.stats,
+			"initiative__tracker__item--monster": value.stats,
+			"initiative__tracker__item--player": !value.stats,
 		})}
 		onClick={(e) => {
 			if (value.stats) {

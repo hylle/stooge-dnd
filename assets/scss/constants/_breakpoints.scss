@@ -1,0 +1,13 @@
+$base-breakpoints: (
+	'print': 'print',
+	'desktop-1400': '(max-width: 1400px)',
+	'desktop-1200': '(max-width: 1200px)',
+	'desktop': '(min-width: 1025px)',
+	'tablet': '(max-width: 1024px)',
+	'tablet-sm': '(max-width: 949px)',
+	'mobile-ab': '(min-width: 769px)',
+	'mobile': '(max-width: 768px)',
+	'mobile-sm': '(max-width: 567px)'
+);
+
+$breakpoints: (); // for custom locally added breakpoint

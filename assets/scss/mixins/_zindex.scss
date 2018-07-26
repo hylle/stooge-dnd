@@ -1,0 +1,12 @@
+$z-map: (
+	default: 1,
+);
+
+@function z($name) {
+	@if map-has-key($z-map, $name) {
+		@return map-get($z-map, $name);
+	} @else {
+		@warn 'There is no item "#{$name}" available in the z-index map.';
+		@return '';
+	}
+}

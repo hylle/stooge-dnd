@@ -1,0 +1,114 @@
+@import 'import';
+
+.initiative {
+	display: flex;
+	flex-direction: row;
+	height: 100vh;
+
+	&__tracker {
+		flex: 0 0 300px;
+		display: flex;
+		flex-direction: column;
+		background: #252525;
+		border-right: 1px solid #333;
+
+		&__actions {
+			display: flex;
+			height: 75px;
+
+
+			img {
+				width: 40px;
+				height: 40px;
+			}
+
+			&__button {
+				display: flex;
+				flex: 0 0 75px;
+				align-items: center;
+				justify-content: center;
+				background-color: rgba($dndred, 0.507);
+				font-weight: 700;
+				text-transform: uppercase;
+				border: 0;
+				border-right: 1px solid rgba($dndred, 0.3);
+				outline: 0;
+
+				cursor: pointer;
+			}
+		}
+
+		&__list {
+			list-style-type: none;
+			display: flex;
+			flex-direction: column;
+			width: 100%;
+			padding: 0;
+			margin: 0;
+		}
+
+		&__item {
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			padding-left: 20px;
+			padding-right: 20px;
+			width: 100%;
+			height: 100px;
+
+			font-size: 1.05em;
+			font-weight: 500;
+			color: $white;
+
+
+			// background: linear-gradient(to bottom right, #dd4b3d, #b5382c);
+			background: linear-gradient(to bottom right, #333333, #252525);
+			// border-top: 1px solid #333;
+			// border-bottom: 1px solid #232323;
+
+			cursor: move;
+
+			&--player {
+				border-left: 5px solid rgba($color2, .9);
+			}
+			&--monster {
+				border-left: 5px solid rgba($color5, .9);
+			}
+
+			&--clickable {
+				cursor: pointer;
+			}
+
+			&.dragging {
+				cursor: move;
+			}
+
+			&:last-child {
+				border-bottom: 1px solid #333;
+			}
+
+			button {
+				display: inline-block;
+				border: 1px solid #333;
+				font-family: monospace;
+				font-size: 16px;
+				font-weight: 700;
+
+
+				outline: 0;
+				margin-left: 5px;
+			}
+		}
+	}
+
+	&__info {
+		width: 100%;
+		padding: 20px;
+
+		box-shadow: 0 0 5px 2px rgba(0, 0, 0, .3);
+
+		overflow-y: auto;
+	}
+}
+
+
