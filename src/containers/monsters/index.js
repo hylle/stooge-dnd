@@ -15,11 +15,14 @@ const colors = {
 	'gold': null,
 	'silver': null,
 	'black': null,
-	'brown': { bg: '#4c270c', color: '#fff' },
-	'zombie': { bg: '#a6bd4f', color: '#fff' },
-	'goblin': { bg: '#41924B', color: '#fff' },
-	'unicorn': { bg: RAINBOW, color: '#fff' },
-	'chimera': { bg: RAINBOW, color: '#fff' },
+	'brown': { background: '#4c270c', color: '#fff' },
+	'zombie': { background: '#a6bd4f', color: '#fff' },
+	'goblin': { background: '#41924B', color: '#fff' },
+	'unicorn': { background: RAINBOW, color: '#000' },
+	'blood': { background: '#8a0707', color: '#fff' },
+	'copper': { background: '#b87333', color: '#fff' },
+	'bronze': { background: '#cd7f32', color: '#fff' },
+	'brass': { background: '#b5a642', color: '#fff' },
 };
 
 class MonsterLookup extends Component {
@@ -44,11 +47,12 @@ class MonsterLookup extends Component {
 								style={this.getColorFromName(monster.name)}
 								onClick={this.createAddPlayers(monster.url)}
 							>
-								{monster.name.split(' ').map((namePart, i) => (
+								{monster.name}
+								{/* {monster.name.split(' ').map((namePart, i) => (
 									<Fragment key={i}>
 										{namePart}<br/>
 									</Fragment>
-								))}
+								))} */}
 							</div>
 						</div>
 					))}
@@ -60,26 +64,16 @@ class MonsterLookup extends Component {
 	getColorFromName = (name) => {
 		const lcName = name.toLowerCase();
 		const colorNames = Object.keys(colors);
-		const style = {};
+		let style = {};
 		for (let index = 0; index < colorNames.length; index++) {
 			const colorName = colorNames[index];
 			if (lcName.indexOf(colorName) !== -1) {
 				style.backgroundColor = colorName;
 				style.color = '#fff';
 
-				const colorObj = colors[colorName];
-				if (colorObj && typeof colorObj === 'object') {
-					if (colorObj.bg) {
-						style.background = colorObj.bg;
-					}
-
-					if (colorObj.border) {
-						style.border = colorObj.border;
-					}
-
-					if (colorObj.color) {
-						style.color = colorObj.color;
-					}
+				const styleObj = colors[colorName];
+				if (styleObj && typeof styleObj === 'object') {
+					style = styleObj;
 				}
 			}
 

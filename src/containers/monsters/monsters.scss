@@ -6,12 +6,12 @@
 		padding-bottom: 0;
 
 		input {
-			height: 32px + 64px;
+			height: 60px;
 			width: 100%;
 
 			padding-left: 20px;
 
-			font-size: 32px;
+			font-size: 18px;
 			font-weight: 700;
 			outline: 0;
 
@@ -20,7 +20,7 @@
 			border-radius: 5px;
 
 			&::placeholder {
-				color: rgba($black, .5);
+				color: #444;
 			}
 
 		}
@@ -29,40 +29,36 @@
 	&__monsterlist {
 		width: 100%;
 
-		display: grid;
-		grid-template-columns: 1fr 1fr 1fr;
+		display: block;
+		// grid-template-columns: 1fr 1fr 1fr;
 		/* grid-template-rows:
 			calc((100% / 3) - 40px / 3)
 			calc((100% / 3) - 40px / 3)
 			calc((100% / 3) - 40px / 3); */
-		grid-auto-flow: row dense;
-		grid-gap: 20px;
+		// grid-auto-flow: row dense;
+		// grid-gap: 20px;
 		padding: 20px;
 
 		&__item {
-			position: relative;
-			grid-column-end: span 1;
+			float: left;
 
-			// padding-bottom: 100%;
+			margin-bottom: 5px;
+			margin-right: 5px;
 
 			&__content {
-				// position: absolute;
-				// top: 0;
-				// left: 0;
-				width: 100%;
-				height: 100%;
-				min-height: 5em;
-
-				// border: 1px solid $border-color;
-				background-color: $white;
+				// border: 1px solid $blue1;
 				border-radius: 5px;
+				background-color: $white;
 
-				color: $black;
-				font-size: 32px;
-				font-weight: 700;
+
+				color: $blue3;
+				font-size: 12px;
+				font-weight: 400;
 				font-family: $ff-mont;
-				padding: 20px;
-				word-break: break-all;
+				padding: 10px 10px;
+
+				// word-break: break-all;
+				white-space: nowrap;
 				overflow: hidden;
 
 				cursor: pointer;
