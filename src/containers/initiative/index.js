@@ -28,7 +28,7 @@ const SortableItem = SortableElement(({ value, remove, goto }) =>
 		}}
 	>
 		{value.name}
-		<span>
+		<span className="initiative__tracker__item__item-actions">
 			<button onClick={remove}>-</button>
 		</span>
 	</li>

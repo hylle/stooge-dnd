@@ -15,12 +15,11 @@ const colors = {
 	'gold': null,
 	'silver': null,
 	'black': null,
-	'brown': { bg: '#4c270c' },
-	'zombie': { bg: '#a6bd4f' },
-	'goblin': { bg: '#41924B' },
-	'white': { border: '1px solid black', color: '#000' },
-	'unicorn': { bg: RAINBOW },
-	'chimera': { bg: RAINBOW },
+	'brown': { bg: '#4c270c', color: '#fff' },
+	'zombie': { bg: '#a6bd4f', color: '#fff' },
+	'goblin': { bg: '#41924B', color: '#fff' },
+	'unicorn': { bg: RAINBOW, color: '#fff' },
+	'chimera': { bg: RAINBOW, color: '#fff' },
 };
 
 class MonsterLookup extends Component {
@@ -66,6 +65,7 @@ class MonsterLookup extends Component {
 			const colorName = colorNames[index];
 			if (lcName.indexOf(colorName) !== -1) {
 				style.backgroundColor = colorName;
+				style.color = '#fff';
 
 				const colorObj = colors[colorName];
 				if (colorObj && typeof colorObj === 'object') {
