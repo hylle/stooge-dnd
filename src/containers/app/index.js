@@ -1,7 +1,7 @@
 import React from 'react';
 // import classnames from 'classnames';
 import { Switch, Route, Redirect } from 'react-router';
-import { BrowserRouter, Link } from 'react-router-dom';
+import { HashRouter, Link } from 'react-router-dom';
 import InitiativeTracker from '../initiative';
 import MonsterLookup from '../monsters';
 import EncounterGenerator from '../encounter';
@@ -15,7 +15,7 @@ import './app.css';
 console.log(process.env.REACT_APP_BASE_URL);
 
 const App = () => (
-	<BrowserRouter basename={process.env.REACT_APP_BASE_URL}>
+	<HashRouter basename={process.env.REACT_APP_BASE_URL}>
 		<div className="layout">
 			<aside className="navigation">
 				<ol>
@@ -50,7 +50,7 @@ const App = () => (
 				</div>
 			</div>
 		</div>
-	</BrowserRouter>
+	</HashRouter>
 );
 
 export default App;
