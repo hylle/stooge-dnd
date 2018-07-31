@@ -1,7 +1,7 @@
 import React from 'react';
 // import classnames from 'classnames';
 import { Switch, Route, Redirect } from 'react-router';
-import { Link } from 'react-router-dom';
+import { BrowserRouter, Link } from 'react-router-dom';
 import InitiativeTracker from '../initiative';
 import MonsterLookup from '../monsters';
 import EncounterGenerator from '../encounter';
@@ -14,6 +14,7 @@ import './app.css';
 
 const App = () => (
 	<div className="layout">
+		<BrowserRouter basename={process.env.REACT_APP_BASE_URL} />
 		<aside className="navigation">
 			<ol>
 				<li>
