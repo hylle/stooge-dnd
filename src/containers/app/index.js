@@ -15,7 +15,7 @@ import './app.css';
 console.log(process.env.REACT_APP_BASE_URL);
 
 const App = () => (
-	<HashRouter basename={process.env.REACT_APP_BASE_URL}>
+	<HashRouter>
 		<div className="layout">
 			<aside className="navigation">
 				<ol>
