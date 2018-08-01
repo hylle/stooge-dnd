@@ -1,17 +1,18 @@
 .initiative {
   display: flex;
   flex-direction: row;
-  height: 100vh; }
+  height: calc(100vh - 58px); }
   .initiative__tracker {
     flex: 0 0 300px;
     display: flex;
-    flex-direction: column; }
+    flex-direction: column;
+    background: #2E3E4D; }
     .initiative__tracker__actions {
       display: flex;
-      height: 60px;
-      background-color: #fff;
-      border-radius: 5px;
-      margin: 5px; }
+      height: 58px;
+      padding: 10px;
+      margin-bottom: 10px;
+      background-color: #374B5C; }
       .initiative__tracker__actions img {
         width: 40px;
         height: 40px; }
@@ -20,6 +21,7 @@
         flex: 0 0 60px;
         align-items: center;
         justify-content: center;
+        padding: 0;
         font-weight: 700;
         text-transform: uppercase;
         border: 0;
@@ -37,54 +39,66 @@
             left: 0;
             height: 40px;
             width: 0;
-            border-left: 1px solid #ebeef7; }
+            border-left: 1px solid #374B5C; }
     .initiative__tracker__list {
       list-style-type: none;
       display: flex;
       flex-direction: column;
       width: 100%;
-      padding: 5px 0;
+      padding: 0;
       margin: 0; }
     .initiative__tracker__item {
       display: flex;
       align-items: center;
-      padding-left: 20px;
-      padding-right: 20px;
-      margin: 5px;
-      height: 55px;
-      box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.03);
-      background-color: #fff;
-      border-radius: 5px;
-      border: none;
       outline: 0;
       text-align: left;
       font-size: 1.05em;
       font-weight: 500;
-      color: #3f5aa6;
+      color: #fff;
       cursor: move; }
-      .initiative__tracker__item::before {
-        content: '';
-        display: inline-block;
-        width: 10px;
-        height: 10px;
-        border-radius: 50%;
-        margin-right: 10px; }
-      .initiative__tracker__item--player::before {
-        background-color: #8ec1a3; }
-      .initiative__tracker__item--monster::before {
-        background-color: #a63f3f; }
-      .initiative__tracker__item--clickable {
-        cursor: pointer; }
+      .initiative__tracker__item__link {
+        position: relative;
+        flex: 1 1 auto;
+        display: flex;
+        align-items: center;
+        padding-left: 20px;
+        padding-right: 20px;
+        height: 55px;
+        background-image: linear-gradient(to right, #2E3E4D, #2E3E4D, #2E3E4D, #008bcf, #00cfae);
+        background-size: 900px 55px;
+        background-position: 0 0;
+        cursor: pointer;
+        border-top: 2px solid rgba(0, 0, 0, 0);
+        border-bottom: 2px solid rgba(0, 0, 0, 0);
+        transition: border-color 200ms ease-out, background-position 400ms ease-in-out; }
+        .initiative__tracker__item__link:hover::before {
+          content: '';
+          position: absolute;
+          top: -1px;
+          right: 0;
+          bottom: -1px;
+          left: 0;
+          background-color: rgba(0, 0, 0, 0.08); }
+        .initiative__tracker__item__link__name--player {
+          border-bottom: 1px solid #8ec1a3; }
+        .initiative__tracker__item__link__name--monster {
+          border-bottom: 1px solid #da3827; }
+        .initiative__tracker__item__link.active {
+          background-position: -600px 0;
+          border-top-color: rgba(0, 0, 0, 0);
+          border-bottom-color: rgba(0, 0, 0, 0); }
+          .initiative__tracker__item__link.active .initiative__tracker__item__link__name {
+            border-bottom: 1px solid #fff; }
+        .initiative__tracker__item__link__actions {
+          margin-left: auto; }
       .initiative__tracker__item.dragging {
         cursor: move;
-        box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.1); }
-      .initiative__tracker__item__item-actions {
-        margin-left: auto; }
+        box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.1); }
       .initiative__tracker__item button {
         display: inline-block;
         border: none;
-        background-color: #3f5aa6;
-        color: #fff;
+        background-color: #fff;
+        color: #000;
         border-radius: 5px;
         font-family: monospace;
         font-size: 16px;

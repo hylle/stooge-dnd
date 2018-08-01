@@ -1,11 +1,16 @@
 import React, { Component } from 'react';
-import { Switch, Route } from 'react-router'
+import PropTypes from 'prop-types';
+import { Switch, Route } from 'react-router';
 import { push } from 'connected-react-router';
 import { connect } from 'react-redux';
-import {SortableContainer, SortableElement } from 'react-sortable-hoc';
-import { Link } from 'react-router-dom';
+import { SortableContainer, SortableElement } from 'react-sortable-hoc';
+import { NavLink, Link } from 'react-router-dom';
 import classnames from 'classnames';
-import { PLAYERS_ADD, PLAYERS_REMOVE, PLAYERS_MOVE } from '../../reducers/players';
+import {
+	PLAYERS_ADD,
+	PLAYERS_REMOVE,
+	PLAYERS_MOVE,
+} from '../../reducers/players';
 import MonsterStats from '../../components/monsterstats';
 
 import IconMinotaur from './minotaur.svg';
@@ -13,48 +18,75 @@ import IconSwordman from './swordman.svg';
 
 import './initiative.css';
 
-const SortableItem = SortableElement(({ value, remove, goto }) =>
-	<li
-		className={classnames({
-			"initiative__tracker__item": true,
-			"initiative__tracker__item--clickable": value.stats,
-			"initiative__tracker__item--monster": value.stats,
-			"initiative__tracker__item--player": !value.stats,
-		})}
-		onClick={(e) => {
-			if (value.stats) {
-				goto(`/initiative/${value.stats._id}`);
-			}
-		}}
-	>
-		{value.name}
-		<span className="initiative__tracker__item__item-actions">
-			<button onClick={remove}>-</button>
-		</span>
-	</li>
-);
+const SortableItem = SortableElement(({ value, remove }) => {
+	// console.log(value);
+	return (
+		<li className="initiative__tracker__item">
+			<NavLink
+				to={
+					value.stats
+						? `/initiative/monster/${value.stats.index}`
+						: `/initiative/player/${value.name.toLowerCase()}`
+				}
+				className="initiative__tracker__item__link"
+			>
+				<span
+					className={classnames({
+						'initiative__tracker__item__link__name': true,
+						'initiative__tracker__item__link__name--monster': value.stats,
+						'initiative__tracker__item__link__name--player': !value.stats,
+					})}
+				>
+					{value.name}
+				</span>
+				<span className="initiative__tracker__item__link__actions">
+					<button type="submit" onClick={remove}>
+						{'-'}
+					</button>
+				</span>
+			</NavLink>
+		</li>
+	);
+});
 
-const SortableList = SortableContainer(({ items, remove, goto }) => {
+const SortableList = SortableContainer(({ items, remove }) => {
 	return (
 		<ol className="initiative__tracker__list">
 			{items.map((value, index) => (
-				<SortableItem key={`item-${index}`} index={index} value={value} remove={() => remove(index)} goto={goto} />
+				<SortableItem
+					key={`item-${value.name}`}
+					index={index}
+					value={value}
+					remove={() => remove(index)}
+				/>
 			))}
 		</ol>
 	);
 });
 
 class InitiativeTracker extends Component {
+	static propTypes = {
+		dispatch: PropTypes.func.isRequired,
+		players: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
+	};
+
 	render() {
 		const { players, dispatch } = this.props;
 		return (
 			<div className="initiative">
 				<div className="initiative__tracker">
 					<div className="initiative__tracker__actions">
-						<button onClick={this.addPlayers} className="initiative__tracker__actions__button">
+						<button
+							type="submit"
+							onClick={this.addPlayers}
+							className="initiative__tracker__actions__button"
+						>
 							<img src={IconSwordman} alt="" />
 						</button>
-						<Link to="/monsters" className="initiative__tracker__actions__button">
+						<Link
+							to="/monsters"
+							className="initiative__tracker__actions__button"
+						>
 							<img src={IconMinotaur} alt="" />
 						</Link>
 					</div>
@@ -70,14 +102,22 @@ class InitiativeTracker extends Component {
 				</div>
 				<div className="initiative__info">
 					<Switch>
-						<Route path="/initiative/:id" component={MonsterStats}/>
+						<Route path="/initiative/monster/:id" component={MonsterStats} />
+						<Route
+							path="/initiative/player/:id"
+							component={() => (
+								<div>
+									{'Nothing to see here'}
+								</div>
+							)}
+						/>
 					</Switch>
 				</div>
 			</div>
 		);
 	}
 
-	onSortEnd = ({oldIndex, newIndex}) => {
+	onSortEnd = ({ oldIndex, newIndex }) => {
 		const { dispatch } = this.props;
 		dispatch({
 			type: PLAYERS_MOVE,
@@ -88,9 +128,14 @@ class InitiativeTracker extends Component {
 
 	addPlayers = () => {
 		const { dispatch } = this.props;
-		const namesStr = window.prompt('Enter player names, separate multiple names with comma.');
+		// eslint-disable-next-line no-alert
+		const namesStr = window.prompt(
+			'Enter player names, separate multiple names with comma.',
+		);
 		if (namesStr) {
-			const players = namesStr.split(',').map((name) => this.createPlayerObject(name.trim()));
+			const players = namesStr
+				.split(',')
+				.map((name) => this.createPlayerObject(name.trim()));
 
 			if (players.length) {
 				dispatch({
@@ -99,7 +144,7 @@ class InitiativeTracker extends Component {
 				});
 			}
 		}
-	}
+	};
 
 	removePlayer = (index = 0) => {
 		const { dispatch } = this.props;
@@ -108,7 +153,7 @@ class InitiativeTracker extends Component {
 			type: PLAYERS_REMOVE,
 			index,
 		});
-	}
+	};
 
 	createPlayerObject = (name) => ({
 		name,

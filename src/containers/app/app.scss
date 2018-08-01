@@ -46,13 +46,13 @@ a {
 	display: flex;
 	flex-direction: row;
 	justify-content: center;
-	flex: 0 0 50px;
+	flex: 0 0 58px;
 	overflow: hidden;
 	font-size: 15px;
 	font-weight: 700;
 	color: $white;
 	// background-color: rgba($dndred, .9);
-	background-color: $red;
+	background-color: #151b20;
 	transition: flex-basis 250ms ease-in;
 
 	&__icon {
@@ -80,8 +80,8 @@ a {
 	}
 
 	li {
-		flex: 0 0 50px;
-		height: 50px;
+		flex: 0 0 58px;
+		height: 58px;
 		display: flex;
 		justify-content: flex-start;
 		align-items: center;
@@ -101,9 +101,8 @@ a {
 	position: relative;
 	display: flex;
 	flex-direction: row;
-	height: calc(100vh - 50px);
+	height: calc(100vh - 58px);
 	width: 100vw;
-	box-shadow: 0 0 5px 2px rgba(0, 0, 0, 0.3);
 
 	&__content {
 		width: 100%;

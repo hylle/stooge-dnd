@@ -38,12 +38,12 @@ a {
   display: flex;
   flex-direction: row;
   justify-content: center;
-  flex: 0 0 50px;
+  flex: 0 0 58px;
   overflow: hidden;
   font-size: 15px;
   font-weight: 700;
   color: #fff;
-  background-color: #a63f3f;
+  background-color: #151b20;
   transition: flex-basis 250ms ease-in; }
   .navigation__icon {
     height: 30px;
@@ -64,8 +64,8 @@ a {
     padding: 0;
     border-top: 1px solid rgba(255, 255, 255, 0.035); }
   .navigation li {
-    flex: 0 0 50px;
-    height: 50px;
+    flex: 0 0 58px;
+    height: 58px;
     display: flex;
     justify-content: flex-start;
     align-items: center;
@@ -80,9 +80,8 @@ a {
   position: relative;
   display: flex;
   flex-direction: row;
-  height: calc(100vh - 50px);
-  width: 100vw;
-  box-shadow: 0 0 5px 2px rgba(0, 0, 0, 0.3); }
+  height: calc(100vh - 58px);
+  width: 100vw; }
   .layout-content__content {
     width: 100%;
     height: 100%;
