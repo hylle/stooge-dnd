@@ -67,7 +67,7 @@ const SortableList = SortableContainer(({ items, remove }) => {
 class InitiativeTracker extends Component {
 	static propTypes = {
 		dispatch: PropTypes.func.isRequired,
-		players: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
+		players: PropTypes.shape({}).isRequired,
 	};
 
 	render() {
