@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import filter from 'lodash/filter';
 
-import monstersData from '../../monsters.json';
+import monstersData from '../../api/monsters.json';
 import './monsters.css';
 import { PLAYERS_ADD } from '../../reducers/players';
 import { MONSTERS_ADD } from '../../reducers/monsters';
