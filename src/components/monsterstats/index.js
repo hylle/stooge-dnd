@@ -264,7 +264,7 @@ const MonsterStats = ({ monster }) => {
 };
 
 MonsterStats.propTypes = {
-	monster: PropTypes.shape({}),
+	monster: PropTypes.oneOfType([PropTypes.shape({}), PropTypes.oneOf([false])]),
 };
 
 MonsterStats.defaultProps = {

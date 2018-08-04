@@ -12,8 +12,6 @@ import IconClash from './sword-clash.svg';
 
 import './app.css';
 
-console.log(process.env.REACT_APP_BASE_URL);
-
 const App = () => (
 	<HashRouter>
 		<div className="layout">
@@ -21,32 +19,43 @@ const App = () => (
 				<ol>
 					<li>
 						<Link to="/initiative">
-								<img src={IconInitiative} alt="Initiative Tracker" className="navigation__icon" />
+							<img
+								src={IconInitiative}
+								alt="Initiative Tracker"
+								className="navigation__icon"
+							/>
 						</Link>
 					</li>
 					<li>
 						<Link to="/monsters">
-							<img src={IconMonster} alt="Monster Lookup" className="navigation__icon" />
+							<img
+								src={IconMonster}
+								alt="Monster Lookup"
+								className="navigation__icon"
+							/>
 						</Link>
 					</li>
 					<li>
 						<Link to="/encounter">
-							<img src={IconClash} alt="Encounter Generator" className="navigation__icon" />
+							<img
+								src={IconClash}
+								alt="Encounter Generator"
+								className="navigation__icon"
+							/>
 						</Link>
 					</li>
 				</ol>
 			</aside>
 
-
 			<div className="layout-content">
 				<div className="layout-content__content">
-				<Switch>
-					<Redirect from="/" to="/initiative" exact />
-					<Route path="/initiative" component={InitiativeTracker}/>
-					<Route path="/monsters" component={MonsterLookup}/>
-					<Route path="/encounter" component={EncounterGenerator}/>
-					{/* <Route component={NoMatch}/> */}
-				</Switch>
+					<Switch>
+						<Redirect from="/" to="/initiative" exact />
+						<Route path="/initiative" component={InitiativeTracker} />
+						<Route path="/monsters" component={MonsterLookup} />
+						<Route path="/encounter" component={EncounterGenerator} />
+						{/* <Route component={NoMatch}/> */}
+					</Switch>
 				</div>
 			</div>
 		</div>

@@ -15,6 +15,7 @@ import MonsterStats from '../../components/monsterstats';
 
 import IconMinotaur from './minotaur.svg';
 import IconSwordman from './swordman.svg';
+import IconRemove from './remove.svg';
 
 import './initiative.css';
 
@@ -39,12 +40,16 @@ const SortableItem = SortableElement(({ value, remove }) => {
 				>
 					{value.name}
 				</span>
-				<span className="initiative__tracker__item__link__actions">
-					<button type="submit" onClick={remove}>
-						{'-'}
-					</button>
-				</span>
 			</NavLink>
+			<span className="initiative__tracker__item__actions">
+				<button
+					type="submit"
+					className="initiative__tracker__item__actions__button"
+					onClick={remove}
+				>
+					<img src={IconRemove} alt="-" title="Remove" height="20" width="20" />
+				</button>
+			</span>
 		</li>
 	);
 });
@@ -57,7 +62,7 @@ const SortableList = SortableContainer(({ items, remove }) => {
 					key={`item-${value.name}`}
 					index={index}
 					value={value}
-					remove={() => remove(index)}
+					remove={(e) => remove(index)}
 				/>
 			))}
 		</ol>
@@ -105,11 +110,7 @@ class InitiativeTracker extends Component {
 						<Route path="/initiative/monster/:id" component={MonsterStats} />
 						<Route
 							path="/initiative/player/:id"
-							component={() => (
-								<div>
-									{'Nothing to see here'}
-								</div>
-							)}
+							component={() => <div>Nothing to see here</div>}
 						/>
 					</Switch>
 				</div>
@@ -147,12 +148,15 @@ class InitiativeTracker extends Component {
 	};
 
 	removePlayer = (index = 0) => {
-		const { dispatch } = this.props;
+		const { dispatch, players } = this.props;
+		const player = players.items[index];
 
-		dispatch({
-			type: PLAYERS_REMOVE,
-			index,
-		});
+		if (window.confirm(` Are you sure you want to remove "${player.name}"?`)) {
+			dispatch({
+				type: PLAYERS_REMOVE,
+				index,
+			});
+		}
 	};
 
 	createPlayerObject = (name) => ({
