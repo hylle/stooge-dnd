@@ -52,7 +52,7 @@
     background-color: rgba(0, 0, 0, 0.08); }
   .trackerlist-item.dragging {
     cursor: move;
-    box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.1); }
+    box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.1); }
   .trackerlist-item__actions {
     position: absolute;
     bottom: 50%;

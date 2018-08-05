@@ -137,7 +137,7 @@ class MonsterLookup extends Component {
 				data: monster,
 			});
 
-			dispatch(this.createMonsterAddPlayerAction(monster));
+			// dispatch(this.createMonsterAddPlayerAction(monster));
 		}
 	};
 }

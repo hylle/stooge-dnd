@@ -1,80 +1,11 @@
 @import 'import';
 
-.initiative {
+.initiative-tracker {
+	flex: 0 0 300px;
 	display: flex;
-	flex-direction: row;
-	height: calc(100vh - 58px);
-
-	&__tracker {
-		flex: 0 0 300px;
-		display: flex;
-		flex-direction: column;
-		background: #2E3E4D;
-		// border-right: 1px solid #333;
-
-		&__actions {
-			display: flex;
-			height: 58px;
-
-			padding: 10px;
-			margin-bottom: 10px;
-
-			background-color: #374B5C;
-
-			img {
-				width: 40px;
-				height: 40px;
-			}
-
-			&__button {
-				display: flex;
-				flex: 0 0 60px;
-				align-items: center;
-				justify-content: center;
-				padding: 0;
-
-				font-weight: 700;
-				text-transform: uppercase;
-				border: 0;
-				background-color: transparent;
-				// border-right: 1px solid rgba($dndred, 0.3);
-				outline: 0;
-
-				cursor: pointer;
-
-				transition: opacity 150ms ease-in;
-
-				&:hover {
-					opacity: .7;
-				}
-
-				$self: &;
-				+ #{$self} {
-					position: relative;
-
-					&::before {
-						content: '';
-						position: absolute;
-						left: 0;
-
-						height: 40px;
-						width: 0;
-
-						border-left: 1px solid #374B5C;
-					}
-				}
-			}
-		}
-	}
-
-	&__info {
-		width: 100%;
-		padding: 20px;
-
-		// box-shadow: 0 0 5px 2px rgba(0, 0, 0, .3);
-
-		overflow-y: auto;
-	}
+	flex-direction: column;
+	background: #2E3E4D;
+	// border-right: 1px solid #333;
 }
 
 

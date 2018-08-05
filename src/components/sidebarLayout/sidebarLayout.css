@@ -1,0 +1,13 @@
+.sidebarlayout {
+  display: flex;
+  flex-direction: row;
+  height: 100%; }
+  .sidebarlayout__sidebar {
+    flex: 0 0 300px;
+    display: flex;
+    flex-direction: column;
+    background: #2E3E4D; }
+  .sidebarlayout__content {
+    width: 100%;
+    padding: 20px;
+    overflow-y: auto; }
