@@ -1,5 +1,7 @@
 import without from 'lodash/without';
-import createPersistStateFunction from '../utils/persistState';
+import createPersistStateFunction, {
+	getInitialStateFromStorage,
+} from '../utils/persistState';
 import arrayMove from '../utils/arrayMove';
 
 export const INITIATIVE_MOVE = 'initiative/INITIATIVE_MOVE';
@@ -7,19 +9,19 @@ export const INITIATIVE_ADD = 'initiative/INITIATIVE_ADD';
 export const INITIATIVE_REMOVE = 'initiative/INITIATIVE_REMOVE';
 
 const storageKey = 'stoogeInitiative';
-const initialState = JSON.parse(window.localStorage.getItem(storageKey)) || {
+const storageVersion = 1;
+const defaultState = {
 	actors: [],
 };
-
+const initialState = getInitialStateFromStorage(
+	defaultState,
+	storageKey,
+	storageVersion,
+);
 const persistState = createPersistStateFunction(storageKey);
 
-// const actorTemplate = {
-// 	type: TYPE_MONSTER,
-// 	id: null,
-// };
-
 function moveActors(state, oldIndex, newIndex) {
-	console.log({ oldIndex, newIndex });
+	// console.log({ oldIndex, newIndex });
 	const newState = {
 		...state,
 		actors: arrayMove(state.actors, oldIndex, newIndex),
@@ -30,10 +32,10 @@ function moveActors(state, oldIndex, newIndex) {
 
 function addActor(state, actor) {
 	if (actor) {
-		return {
+		return persistState({
 			...state,
 			actors: [...state.actors, actor],
-		};
+		});
 	}
 
 	return state;

@@ -1,13 +1,21 @@
 import uniqueId from 'lodash/uniqueId';
-import createPersistStateFunction from '../utils/persistState';
+import createPersistStateFunction, {
+	getInitialStateFromStorage,
+} from '../utils/persistState';
 
 export const TYPE_MONSTER = 'monsters/TYPE_MONSTER';
 export const MONSTERS_ADD = 'monsters/MONSTERS_ADD';
 
-const storageKey = 'stoogeMonstersV2';
-const initialState = JSON.parse(window.localStorage.getItem(storageKey)) || {
+const storageKey = 'stoogeMonsters';
+const storageVersion = 1;
+const defaultState = {
 	encounters: [],
 };
+const initialState = getInitialStateFromStorage(
+	defaultState,
+	storageKey,
+	storageVersion,
+);
 const persistState = createPersistStateFunction(storageKey);
 
 function addMonster(state, encounter, monster) {

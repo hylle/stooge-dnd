@@ -1,5 +1,7 @@
 import without from 'lodash/without';
-import createPersistStateFunction from '../utils/persistState';
+import createPersistStateFunction, {
+	getInitialStateFromStorage,
+} from '../utils/persistState';
 import arrayMove from '../utils/arrayMove';
 
 export const TYPE_PLAYER = 'players/TYPE_PLAYER';
@@ -8,9 +10,15 @@ export const PLAYERS_REMOVE = 'players/PLAYERS_REMOVE';
 export const PLAYERS_MOVE = 'players/PLAYERS_MOVE';
 
 const storageKey = 'stoogePlayers';
-const initialState = JSON.parse(window.localStorage.getItem(storageKey)) || {
+const storageVersion = 1;
+const defaultState = {
 	items: [],
 };
+const initialState = getInitialStateFromStorage(
+	defaultState,
+	storageKey,
+	storageVersion,
+);
 const persistState = createPersistStateFunction(storageKey);
 
 function addPlayer(state, player) {
