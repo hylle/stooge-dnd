@@ -1,41 +1,11 @@
-.monsterlookup__search {
-  padding: 20px;
-  padding-bottom: 0; }
-  .monsterlookup__search input {
-    height: 60px;
-    width: 100%;
-    padding-left: 20px;
-    font-size: 18px;
-    font-weight: 700;
-    outline: 0;
-    background-color: #fff;
-    border: none;
-    border-radius: 5px; }
-    .monsterlookup__search input::placeholder {
-      color: #444; }
-
-.monsterlookup__monsterlist {
+.monstersearch {
+  height: 4em;
   width: 100%;
-  display: block;
-  /* grid-template-rows:
-			calc((100% / 3) - 40px / 3)
-			calc((100% / 3) - 40px / 3)
-			calc((100% / 3) - 40px / 3); */
-  padding: 20px; }
-  .monsterlookup__monsterlist__item {
-    float: left;
-    margin-bottom: 5px;
-    margin-right: 5px; }
-    .monsterlookup__monsterlist__item__content {
-      border-radius: 5px;
-      background-color: #fff;
-      color: #192a59;
-      font-size: 12px;
-      font-weight: 400;
-      font-family: "Montserrat", sans-serif;
-      padding: 10px 10px;
-      white-space: nowrap;
-      overflow: hidden;
-      cursor: pointer; }
-      .monsterlookup__monsterlist__item__content:hover {
-        background-color: #fafafa; }
+  background: transparent;
+  color: #fff;
+  border: none;
+  font-size: 18px;
+  padding-left: 20px;
+  outline: none; }
+  .monstersearch::placeholder {
+    color: rgba(255, 255, 255, 0.3); }

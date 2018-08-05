@@ -1,3 +1,4 @@
+import without from 'lodash/without';
 import createPersistStateFunction from '../utils/persistState';
 import arrayMove from '../utils/arrayMove';
 
@@ -38,12 +39,26 @@ function addActor(state, actor) {
 	return state;
 }
 
+function removeActor(state, actor) {
+	const actors = without([...state.actors], actor);
+	if (actors.length < state.actors.length) {
+		const newState = {
+			...state,
+			actors,
+		};
+
+		return persistState(newState);
+	}
+
+	return state;
+}
+
 export default (state = initialState, action) => {
 	switch (action.type) {
 		case INITIATIVE_ADD:
 			return addActor(state, action.actor);
 		case INITIATIVE_REMOVE:
-			return state;
+			return removeActor(state, action.actor);
 		case INITIATIVE_MOVE:
 			return moveActors(state, action.oldIndex, action.newIndex);
 		default:

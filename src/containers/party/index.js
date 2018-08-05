@@ -7,7 +7,6 @@ import { connect } from 'react-redux';
 import forEach from 'lodash/forEach';
 import {
 	// PLAYERS_ADD,
-	PLAYERS_REMOVE,
 	PLAYERS_MOVE,
 	TYPE_PLAYER,
 } from '../../reducers/players';
@@ -18,7 +17,7 @@ import SidebarActions from '../../components/sidebarActions';
 import IconSwordman from './swordman.svg';
 import IconRemove from '../../svg/remove.svg';
 import './party.css';
-import { ADD_ACTOR } from '../../actions';
+import { ADD_ACTOR, REMOVE_ACTOR } from '../../actions';
 
 class PartyManager extends Component {
 	static propTypes = {
@@ -52,7 +51,6 @@ class PartyManager extends Component {
 								title: 'Remove player',
 							},
 						]}
-						navLink={(item) => null}
 					/>
 				</Fragment>
 				<Fragment>
@@ -96,14 +94,16 @@ class PartyManager extends Component {
 		}
 	};
 
-	removePlayer = (index = 0) => {
-		const { dispatch, players } = this.props;
-		const player = players[index];
+	removePlayer = (item) => {
+		const { dispatch } = this.props;
 
-		if (window.confirm(` Are you sure you want to remove "${player.name}"?`)) {
+		if (
+			item
+			&& window.confirm(` Are you sure you want to remove "${item.name}"?`)
+		) {
 			dispatch({
-				type: PLAYERS_REMOVE,
-				index,
+				type: REMOVE_ACTOR,
+				actor: item,
 			});
 		}
 	};

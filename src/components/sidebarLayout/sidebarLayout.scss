@@ -8,6 +8,9 @@
 		display: flex;
 		flex-direction: column;
 		background: #2E3E4D;
+
+		max-height: 100%;
+		overflow-y: auto;
 	}
 
 	&__content {
@@ -16,6 +19,7 @@
 
 		// box-shadow: 0 0 5px 2px rgba(0, 0, 0, .3);
 
+		max-height: 100%;
 		overflow-y: auto;
 	}
 }

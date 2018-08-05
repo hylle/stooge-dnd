@@ -1,3 +1,4 @@
+import without from 'lodash/without';
 import createPersistStateFunction from '../utils/persistState';
 import arrayMove from '../utils/arrayMove';
 
@@ -21,11 +22,9 @@ function addPlayer(state, player) {
 	return persistState(newState);
 }
 
-function removePlayer(state, playerIndex) {
-	const players = [...state.items];
-	if (playerIndex > -1 && playerIndex < state.items.length) {
-		players.splice(playerIndex, 1);
-
+function removePlayer(state, player) {
+	const players = without([...state.items], player);
+	if (players.length < state.items.length) {
 		const newState = {
 			...state,
 			items: players,
@@ -51,7 +50,7 @@ export default (state = initialState, action) => {
 		case PLAYERS_ADD:
 			return addPlayer(state, action.player);
 		case PLAYERS_REMOVE:
-			return removePlayer(state, action.index);
+			return removePlayer(state, action.player);
 		case PLAYERS_MOVE:
 			return movePlayers(state, action.oldIndex, action.newIndex);
 		default:

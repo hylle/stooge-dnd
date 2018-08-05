@@ -38,7 +38,7 @@ const App = () => (
 						</Link>
 					</li>
 					<li>
-						<Link to="/monsters">
+						<Link to="/encounters">
 							<img
 								src={IconMonster}
 								alt="Monster Lookup"
@@ -47,7 +47,7 @@ const App = () => (
 						</Link>
 					</li>
 					<li>
-						<Link to="/encounter">
+						<Link to="/encountergenerator">
 							<img
 								src={IconClash}
 								alt="Encounter Generator"
@@ -64,8 +64,8 @@ const App = () => (
 						<Redirect from="/" to="/initiative" exact />
 						<Route path="/initiative" component={InitiativeTracker} />
 						<Route path="/party" component={PartyManager} />
-						<Route path="/monsters" component={MonsterLookup} />
-						<Route path="/encounter" component={EncounterGenerator} />
+						<Route path="/encounters" component={MonsterLookup} />
+						<Route path="/encountergenerator" component={EncounterGenerator} />
 						{/* <Route component={NoMatch}/> */}
 					</Switch>
 				</div>

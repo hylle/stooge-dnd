@@ -1,7 +1,6 @@
 import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { Switch, Route } from 'react-router';
-import { push } from 'connected-react-router';
 import { connect } from 'react-redux';
 // import forEach from 'lodash/forEach';
 // import { Link } from 'react-router-dom';
@@ -22,22 +21,17 @@ class InitiativeTracker extends Component {
 	};
 
 	render() {
-		const { actors, dispatch } = this.props;
+		const { actors } = this.props;
 		return (
 			<SidebarLayout>
 				<Fragment>
 					<SortableList
 						items={actors}
 						onSortEnd={this.onSortEnd}
-						distance={2}
 						linkGen={(item) => (item.stats
 							? `/initiative/monster/${item.id}`
 							: `/initiative/player/${item.id}`)
 						}
-						remove={this.removePlayer}
-						goto={(url) => dispatch(push(url))}
-						lockAxis="y"
-						helperClass="dragging"
 					/>
 				</Fragment>
 				<Fragment>

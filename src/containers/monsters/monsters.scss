@@ -1,73 +1,19 @@
 @import 'import';
 
-.monsterlookup {
-	&__search {
-		padding: 20px;
-		padding-bottom: 0;
+.monstersearch {
+	height: 4em;
+	width: 100%;
 
-		input {
-			height: 60px;
-			width: 100%;
+	background: transparent;
+	color: $white;
+	border: none;
 
-			padding-left: 20px;
+	font-size: 18px;
+	padding-left: 20px;
 
-			font-size: 18px;
-			font-weight: 700;
-			outline: 0;
+	outline: none;
 
-			background-color: $white;
-			border: none;
-			border-radius: 5px;
-
-			&::placeholder {
-				color: #444;
-			}
-
-		}
-	}
-
-	&__monsterlist {
-		width: 100%;
-
-		display: block;
-		// grid-template-columns: 1fr 1fr 1fr;
-		/* grid-template-rows:
-			calc((100% / 3) - 40px / 3)
-			calc((100% / 3) - 40px / 3)
-			calc((100% / 3) - 40px / 3); */
-		// grid-auto-flow: row dense;
-		// grid-gap: 20px;
-		padding: 20px;
-
-		&__item {
-			float: left;
-
-			margin-bottom: 5px;
-			margin-right: 5px;
-
-			&__content {
-				// border: 1px solid $blue1;
-				border-radius: 5px;
-				background-color: $white;
-
-
-				color: $blue3;
-				font-size: 12px;
-				font-weight: 400;
-				font-family: $ff-mont;
-				padding: 10px 10px;
-
-				// word-break: break-all;
-				white-space: nowrap;
-				overflow: hidden;
-
-				cursor: pointer;
-
-				&:hover {
-					background-color: darken($white, 2%);
-				}
-			}
-		}
+	&::placeholder {
+		color: rgba($white, .3);
 	}
 }
-
