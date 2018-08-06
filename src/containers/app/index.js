@@ -5,10 +5,12 @@ import { HashRouter, Link } from 'react-router-dom';
 import InitiativeTracker from '../initiative';
 import MonsterLookup from '../monsters';
 import EncounterGenerator from '../encounter';
+import PartyManager from '../party';
 
 import IconInitiative from './initiative.svg';
 import IconMonster from './monster.svg';
 import IconClash from './sword-clash.svg';
+import IconParty from './party.svg';
 
 import './app.css';
 
@@ -27,7 +29,16 @@ const App = () => (
 						</Link>
 					</li>
 					<li>
-						<Link to="/monsters">
+						<Link to="/party">
+							<img
+								src={IconParty}
+								alt="Party Editor"
+								className="navigation__icon"
+							/>
+						</Link>
+					</li>
+					<li>
+						<Link to="/encounters">
 							<img
 								src={IconMonster}
 								alt="Monster Lookup"
@@ -36,7 +47,7 @@ const App = () => (
 						</Link>
 					</li>
 					<li>
-						<Link to="/encounter">
+						<Link to="/encountergenerator">
 							<img
 								src={IconClash}
 								alt="Encounter Generator"
@@ -52,8 +63,9 @@ const App = () => (
 					<Switch>
 						<Redirect from="/" to="/initiative" exact />
 						<Route path="/initiative" component={InitiativeTracker} />
-						<Route path="/monsters" component={MonsterLookup} />
-						<Route path="/encounter" component={EncounterGenerator} />
+						<Route path="/party" component={PartyManager} />
+						<Route path="/encounters" component={MonsterLookup} />
+						<Route path="/encountergenerator" component={EncounterGenerator} />
 						{/* <Route component={NoMatch}/> */}
 					</Switch>
 				</div>

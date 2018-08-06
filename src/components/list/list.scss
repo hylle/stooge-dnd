@@ -1,0 +1,137 @@
+@import 'import';
+
+.trackerlist {
+	list-style-type: none;
+	display: flex;
+	flex-direction: column;
+	width: 100%;
+	padding: 0;
+	margin: 0;
+}
+
+.trackerlist-item {
+	position: relative;
+
+	flex: 0 0 auto;
+
+	display: flex;
+	// justify-content: flex-start;
+	align-items: center;
+
+	outline: 0;
+
+	text-align: left;
+	font-size: 1.05em;
+	font-weight: 500;
+	color: $white;
+
+	cursor: move;
+
+	&__link {
+		$link: & !global;
+		position: relative;
+
+		flex: 1 1 auto;
+		display: flex;
+		justify-content: flex-start;
+		align-items: center;
+		padding-left: 20px;
+		padding-right: 20px;
+		height: 75px;
+		// padding-top: 10px;
+
+		background-image: linear-gradient(to right, #2E3E4D, #2E3E4D, #2E3E4D, #008bcf, #00cfae);
+		background-size: 900px 55px;
+		background-position: 0 0;
+
+		cursor: pointer;
+
+		border-top: 1px solid rgba($black, .1);
+		border-bottom: 1px solid rgba($black, .1);
+		transition: border-color 200ms ease-out, background-position 400ms ease-in-out;
+
+
+
+		&__name {
+			$name-select: & !global;
+
+			&--player {
+				border-bottom: 1px solid $color2;
+			}
+
+			&--monster {
+				border-bottom: 1px solid $dndred;
+			}
+		}
+
+		&.active {
+			background-position: -600px 0;
+			border-top-color: rgba($black, 0);
+			border-bottom-color: rgba($black, 0);
+
+			#{$name-select} {
+				border-bottom: 1px solid $white;
+			}
+		}
+	}
+
+	&:hover #{$link} {
+		// border-top-color: rgba($black, .1);
+		// border-bottom-color: rgba($black, .1);
+		&::before {
+			content: '';
+			position: absolute;
+			top: -1px;
+			right: 0;
+			bottom: -1px;
+			left: 0;
+
+			background-color: rgba($black, .08);
+		}
+	}
+
+	&.dragging {
+		cursor: move;
+		box-shadow: 0 0 0 1px rgba($black, .1);
+	}
+
+	&__actions {
+		position: absolute;
+		bottom: 50%;
+		right: 10px;
+		z-index: 1;
+
+		transform: translateY(50%);
+
+		&__button {
+			display: flex;
+			padding: 0;
+			border: none;
+			background-color: transparent;
+			// border-radius: 5px;
+			// background: rgba($black, .7);
+			// border: 1px solid currentColor;
+			color: #008bcf;
+			font-family: monospace;
+			font-size: 16px;
+			font-weight: 700;
+
+			height: 20px;
+			width: 20px;
+
+			outline: 0;
+			margin-left: 5px;
+
+			cursor: pointer;
+
+			img {
+				opacity: 0.4;
+				transition: opacity 120ms ease-in;
+
+				&:hover {
+					opacity: 0.9;
+				}
+			}
+		}
+	}
+}

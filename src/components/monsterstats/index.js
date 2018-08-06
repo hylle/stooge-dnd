@@ -279,8 +279,8 @@ export default connect((state, props) => {
 	} = props;
 	return {
 		...state,
-		monster: state.players.items.find((monster) => {
-			return monster.stats && monster.stats.index.toString() === id;
+		monster: state.initiative.actors.find((monster) => {
+			return monster.stats && monster.id === id;
 		}),
 	};
 })(MonsterStats);

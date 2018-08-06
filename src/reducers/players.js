@@ -1,53 +1,38 @@
-import { arrayMove } from 'react-sortable-hoc';
+import without from 'lodash/without';
+import createPersistStateFunction, {
+	getInitialStateFromStorage,
+} from '../utils/persistState';
+import arrayMove from '../utils/arrayMove';
 
-export const PLAYERS_ADD = 'PLAYERS_ADD';
-export const PLAYERS_REMOVE = 'PLAYERS_REMOVE';
-export const PLAYERS_MOVE = 'PLAYERS_MOVE';
+export const TYPE_PLAYER = 'players/TYPE_PLAYER';
+export const PLAYERS_ADD = 'players/PLAYERS_ADD';
+export const PLAYERS_REMOVE = 'players/PLAYERS_REMOVE';
+export const PLAYERS_MOVE = 'players/PLAYERS_MOVE';
 
-
-const storageKey = 'stoogeInitiative';
-const initialState = (JSON.parse(window.localStorage.getItem(storageKey))) || {
+const storageKey = 'stoogePlayers';
+const storageVersion = 1;
+const defaultState = {
 	items: [],
 };
+const initialState = getInitialStateFromStorage(
+	defaultState,
+	storageKey,
+	storageVersion,
+);
+const persistState = createPersistStateFunction(storageKey);
 
-export default (state = initialState, action) => {
-	switch (action.type) {
-		case PLAYERS_ADD:
-			return addPlayers(state, action.players);
-		case PLAYERS_REMOVE:
-			return removePlayer(state, action.index);
-		case PLAYERS_MOVE:
-			return movePlayers(state, action.oldIndex, action.newIndex);
-		default:
-			return state
-	}
-};
+function addPlayer(state, player) {
+	const newState = {
+		...state,
+		items: [...state.items, player],
+	};
 
-function persistState(newState) {
-	window.localStorage.setItem(storageKey, JSON.stringify(newState));
-
-	return newState;
+	return persistState(newState);
 }
 
-function addPlayers(state, players) {
-	const newPlayers = [...state.items, ...players];
-	if (state.items.length !== newPlayers.length) {
-		const newState = {
-			...state,
-			items: newPlayers,
-		};
-
-		return persistState(newState);
-	}
-
-	return state;
-};
-
-function removePlayer(state, playerIndex) {
-	let players = [...state.items];
-	if (playerIndex > -1 && playerIndex < state.items.length) {
-		players.splice(playerIndex, 1);
-
+function removePlayer(state, player) {
+	const players = without([...state.items], player);
+	if (players.length < state.items.length) {
 		const newState = {
 			...state,
 			items: players,
@@ -57,7 +42,7 @@ function removePlayer(state, playerIndex) {
 	}
 
 	return state;
-};
+}
 
 function movePlayers(state, oldIndex, newIndex) {
 	const newState = {
@@ -67,3 +52,16 @@ function movePlayers(state, oldIndex, newIndex) {
 
 	return persistState(newState);
 }
+
+export default (state = initialState, action) => {
+	switch (action.type) {
+		case PLAYERS_ADD:
+			return addPlayer(state, action.player);
+		case PLAYERS_REMOVE:
+			return removePlayer(state, action.player);
+		case PLAYERS_MOVE:
+			return movePlayers(state, action.oldIndex, action.newIndex);
+		default:
+			return state;
+	}
+};

@@ -1,40 +1,36 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import filter from 'lodash/filter';
-import find from 'lodash/find';
+import findIndex from 'lodash/findIndex';
 
+import SidebarLayout from '../../components/sidebarLayout';
+import SortableList from '../../components/list';
+import MonsterEncounters from './encounterList';
 import { PLAYERS_ADD } from '../../reducers/players';
 import { MONSTERS_ADD } from '../../reducers/monsters';
+import IconAdd from '../../svg/add.svg';
 
 import './monsters.css';
-
-const RAINBOW =	'linear-gradient(to top left, #e81123, #e81123 17%, #f7941d 17%, #f7941d 34%, #fff100 34%, #fff100 51%, #00a650 51%, #00a650 68%, #0054a5 68%, #0054a5 85%, #672d93 85%, #672d93)';
-const colors = {
-	blue: null,
-	red: null,
-	green: null,
-	gold: null,
-	silver: null,
-	black: null,
-	brown: { background: '#4c270c', color: '#fff' },
-	zombie: { background: '#a6bd4f', color: '#fff' },
-	goblin: { background: '#41924B', color: '#fff' },
-	unicorn: { background: RAINBOW, color: '#000' },
-	blood: { background: '#8a0707', color: '#fff' },
-	copper: { background: '#b87333', color: '#fff' },
-	bronze: { background: '#cd7f32', color: '#fff' },
-	brass: { background: '#b5a642', color: '#fff' },
-};
 
 class MonsterLookup extends Component {
 	static propTypes = {
 		dispatch: PropTypes.func.isRequired,
+		monsters: PropTypes.shape({
+			encounters: PropTypes.arrayOf(
+				PropTypes.shape({
+					id: PropTypes.string.isRequired,
+				}),
+			).isRequired,
+		}).isRequired,
 	};
 
-	state = { search: '', monsters: [] };
+	state = {
+		search: '',
+		monsters: [],
+	};
 
-	componentDidMount() {
+	componentWillMount() {
 		import(/* webpackChunkName: "monsters" */ '../../api/srd-monsters.json').then(
 			(monsters) => {
 				this.setState({ monsters });
@@ -44,57 +40,50 @@ class MonsterLookup extends Component {
 
 	render() {
 		const { search } = this.state;
+		const {
+			monsters: { encounters, selectedEncounter },
+		} = this.props;
+
+		const hasSelectedEncounter =			findIndex(encounters, ['id', selectedEncounter]) !== -1;
 
 		return (
-			<div className="monsterlookup">
-				<div className="monsterlookup__search">
-					<input
-						name="monstersearch"
-						placeholder="Search for monster"
-						value={search}
-						onInput={this.onInput}
+			<SidebarLayout>
+				<Fragment>
+					<div>
+						<input
+							className="monstersearch"
+							name="monstersearch"
+							placeholder="Search for monsters..."
+							value={search}
+							onInput={this.onInput}
+						/>
+					</div>
+					<SortableList
+						listName="monsters"
+						items={this.filterMonsters()}
+						onSortEnd={() => {}}
+						colorNames
+						actions={
+							hasSelectedEncounter
+								? [
+									{
+										key: 'addToEncounter',
+										onClick: this.addMonsterToEncounter,
+										title: 'Add to encounter',
+										glyph: IconAdd,
+									},
+								  ]
+								: []
+						}
+						disableDragging
 					/>
-				</div>
-				<div className="monsterlookup__monsterlist">
-					{this.filterMonsters().map((monster, i) => (
-						<div
-							key={monster.index}
-							className="monsterlookup__monsterlist__item"
-						>
-							<button
-								type="submit"
-								className="monsterlookup__monsterlist__item__content"
-								style={this.getColorFromName(monster.name)}
-								onClick={this.createAddPlayers(monster.index)}
-							>
-								{monster.name}
-							</button>
-						</div>
-					))}
-				</div>
-			</div>
+				</Fragment>
+				<Fragment>
+					<MonsterEncounters />
+				</Fragment>
+			</SidebarLayout>
 		);
 	}
-
-	getColorFromName = (name) => {
-		const lcName = name.toLowerCase();
-		const colorNames = Object.keys(colors);
-		let style = {};
-		for (let index = 0; index < colorNames.length; index++) {
-			const colorName = colorNames[index];
-			if (lcName.indexOf(colorName) !== -1) {
-				style.backgroundColor = colorName;
-				style.color = '#fff';
-
-				const styleObj = colors[colorName];
-				if (styleObj && typeof styleObj === 'object') {
-					style = styleObj;
-				}
-			}
-		}
-
-		return style;
-	};
 
 	filterMonsters = () => {
 		const { search, monsters } = this.state;
@@ -124,20 +113,19 @@ class MonsterLookup extends Component {
 		],
 	});
 
-	createAddPlayers = (monsterIndex) => () => {
-		const { dispatch } = this.props;
-		const { monsters } = this.state;
+	addMonsterToEncounter = (monster) => {
+		const {
+			dispatch,
+			monsters: { selectedEncounter },
+		} = this.props;
 
-		const monster = find(monsters, ['index', monsterIndex]);
-
-		if (monster && monster.name) {
+		if (selectedEncounter && monster && monster.id) {
 			dispatch({
 				type: MONSTERS_ADD,
-				id: monster.index,
-				data: monster,
+				encounterId: selectedEncounter,
+				monster,
 			});
-
-			dispatch(this.createMonsterAddPlayerAction(monster));
+			// dispatch(this.createMonsterAddPlayerAction(monster));
 		}
 	};
 }
