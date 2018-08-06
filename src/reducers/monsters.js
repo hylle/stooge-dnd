@@ -1,15 +1,22 @@
-import uniqueId from 'lodash/uniqueId';
+import uniqueId from 'unique-string';
+import find from 'lodash/find';
+import findIndex from 'lodash/findIndex';
+import without from 'lodash/without';
 import createPersistStateFunction, {
 	getInitialStateFromStorage,
 } from '../utils/persistState';
 
 export const TYPE_MONSTER = 'monsters/TYPE_MONSTER';
 export const MONSTERS_ADD = 'monsters/MONSTERS_ADD';
+export const MONSTERS_ADD_ENCOUNTER = 'monsters/MONSTERS_ADD_ENCOUNTER';
+export const MONSTERS_REMOVE_ENCOUNTER = 'monsters/MONSTERS_REMOVE_ENCOUNTER';
+export const MONSTERS_SELECT_ENCOUNTER = 'monsters/MONSTERS_SELECT_ENCOUNTER';
 
 const storageKey = 'stoogeMonsters';
 const storageVersion = 1;
 const defaultState = {
 	encounters: [],
+	selectedEncounter: false,
 };
 const initialState = getInitialStateFromStorage(
 	defaultState,
@@ -18,15 +25,16 @@ const initialState = getInitialStateFromStorage(
 );
 const persistState = createPersistStateFunction(storageKey);
 
-function addMonster(state, encounter, monster) {
-	const newEncounters = [...state.encounters];
-	if (encounter === 'new') {
-		newEncounters.push({
-			id: uniqueId('e'),
-			monsters: [monster],
+function addMonster(state, encounterId, monster) {
+	const encounterIndex = findIndex(state.encounters, ['id', encounterId]);
+	if (encounterIndex !== -1) {
+		const newEncounters = [...state.encounters];
+		newEncounters[encounterIndex].monsters.push({
+			id: uniqueId(),
+			name: monster.name,
+			type: TYPE_MONSTER,
+			stats: monster,
 		});
-	} else if (state.encounters[encounter]) {
-		newEncounters[encounter].monsters.push(monster);
 
 		return persistState({
 			...state,
@@ -37,10 +45,52 @@ function addMonster(state, encounter, monster) {
 	return state;
 }
 
+function addEncounter(state) {
+	return persistState({
+		...state,
+		encounters: [
+			...state.encounters,
+			{
+				id: uniqueId(),
+				monsters: [],
+			},
+		],
+	});
+}
+
+function removeEncounter(state, encounterId) {
+	const encounter = find(state.encounters, ['id', encounterId]);
+	if (encounter) {
+		const newState = { ...state };
+		newState.encounters = without(state.encounters, encounter);
+		return persistState(newState);
+	}
+
+	return state;
+}
+
+function selectedEncounter(state, encounterId) {
+	const encounter = find(state.encounters, ['id', encounterId]);
+	if (encounter) {
+		return persistState({
+			...state,
+			selectedEncounter: encounterId,
+		});
+	}
+
+	return state;
+}
+
 export default (state = initialState, action) => {
 	switch (action.type) {
 		case MONSTERS_ADD:
-			return addMonster(state, action.encounter, action.monster);
+			return addMonster(state, action.encounterId, action.monster);
+		case MONSTERS_ADD_ENCOUNTER:
+			return addEncounter(state);
+		case MONSTERS_REMOVE_ENCOUNTER:
+			return removeEncounter(state, action.encounterId);
+		case MONSTERS_SELECT_ENCOUNTER:
+			return selectedEncounter(state, action.encounterId);
 		default:
 			return state;
 	}

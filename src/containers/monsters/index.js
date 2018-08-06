@@ -2,13 +2,14 @@ import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import filter from 'lodash/filter';
-import find from 'lodash/find';
+import findIndex from 'lodash/findIndex';
 
 import SidebarLayout from '../../components/sidebarLayout';
 import SortableList from '../../components/list';
 import MonsterEncounters from './encounterList';
 import { PLAYERS_ADD } from '../../reducers/players';
 import { MONSTERS_ADD } from '../../reducers/monsters';
+import IconAdd from '../../svg/add.svg';
 
 import './monsters.css';
 
@@ -27,7 +28,6 @@ class MonsterLookup extends Component {
 	state = {
 		search: '',
 		monsters: [],
-		selectedEncounter: null,
 	};
 
 	componentWillMount() {
@@ -41,8 +41,11 @@ class MonsterLookup extends Component {
 	render() {
 		const { search } = this.state;
 		const {
-			monsters: { encounters },
+			monsters: { encounters, selectedEncounter },
 		} = this.props;
+
+		const hasSelectedEncounter =			findIndex(encounters, ['id', selectedEncounter]) !== -1;
+
 		return (
 			<SidebarLayout>
 				<Fragment>
@@ -59,11 +62,24 @@ class MonsterLookup extends Component {
 						listName="monsters"
 						items={this.filterMonsters()}
 						onSortEnd={() => {}}
+						colorNames
+						actions={
+							hasSelectedEncounter
+								? [
+									{
+										key: 'addToEncounter',
+										onClick: this.addMonsterToEncounter,
+										title: 'Add to encounter',
+										glyph: IconAdd,
+									},
+								  ]
+								: []
+						}
 						disableDragging
 					/>
 				</Fragment>
 				<Fragment>
-					<MonsterEncounters encounters={encounters} onSortEnd={console.log} />
+					<MonsterEncounters />
 				</Fragment>
 			</SidebarLayout>
 		);
@@ -97,19 +113,18 @@ class MonsterLookup extends Component {
 		],
 	});
 
-	createAddPlayers = (monsterIndex) => () => {
-		const { dispatch } = this.props;
-		const { monsters } = this.state;
+	addMonsterToEncounter = (monster) => {
+		const {
+			dispatch,
+			monsters: { selectedEncounter },
+		} = this.props;
 
-		const monster = find(monsters, ['index', monsterIndex]);
-
-		if (monster && monster.name) {
+		if (selectedEncounter && monster && monster.id) {
 			dispatch({
 				type: MONSTERS_ADD,
-				id: monster.index,
-				data: monster,
+				encounterId: selectedEncounter,
+				monster,
 			});
-
 			// dispatch(this.createMonsterAddPlayerAction(monster));
 		}
 	};

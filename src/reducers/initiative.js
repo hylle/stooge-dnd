@@ -1,12 +1,16 @@
 import without from 'lodash/without';
+import filter from 'lodash/filter';
+
 import createPersistStateFunction, {
 	getInitialStateFromStorage,
 } from '../utils/persistState';
 import arrayMove from '../utils/arrayMove';
+import { TYPE_PLAYER } from './players';
 
 export const INITIATIVE_MOVE = 'initiative/INITIATIVE_MOVE';
 export const INITIATIVE_ADD = 'initiative/INITIATIVE_ADD';
 export const INITIATIVE_REMOVE = 'initiative/INITIATIVE_REMOVE';
+export const INITIATIVE_TRANSFER_ENCOUNTER =	'initiative/INITIATIVE_TRANSFER_ENCOUNTER';
 
 const storageKey = 'stoogeInitiative';
 const storageVersion = 1;
@@ -55,6 +59,18 @@ function removeActor(state, actor) {
 	return state;
 }
 
+function transferMonsters(state, monsters) {
+	const newState = { ...state };
+	const actorsWithoutMonster = filter(
+		state.actors,
+		(actor) => actor.type === TYPE_PLAYER,
+	);
+
+	newState.actors = [...actorsWithoutMonster, ...monsters];
+
+	return persistState(newState);
+}
+
 export default (state = initialState, action) => {
 	switch (action.type) {
 		case INITIATIVE_ADD:
@@ -63,6 +79,8 @@ export default (state = initialState, action) => {
 			return removeActor(state, action.actor);
 		case INITIATIVE_MOVE:
 			return moveActors(state, action.oldIndex, action.newIndex);
+		case INITIATIVE_TRANSFER_ENCOUNTER:
+			return transferMonsters(state, action.monsters);
 		default:
 			return state;
 	}

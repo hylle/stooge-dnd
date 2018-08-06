@@ -1,7 +1,7 @@
 import {
 	take, all, fork, put,
 } from 'redux-saga/effects';
-import uniqueId from 'lodash/uniqueId';
+import uniqueId from 'unique-string';
 import { ADD_ACTOR, REMOVE_ACTOR } from '../actions';
 import { TYPE_PLAYER, PLAYERS_ADD, PLAYERS_REMOVE } from '../reducers/players';
 import { INITIATIVE_ADD, INITIATIVE_REMOVE } from '../reducers/initiative';
@@ -11,7 +11,7 @@ function* watchAddActor() {
 	while (true) {
 		const { actor } = yield take(ADD_ACTOR);
 		const enhancedActor = {
-			id: uniqueId('act'),
+			id: uniqueId(),
 			...actor,
 		};
 

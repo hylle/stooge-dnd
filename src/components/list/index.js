@@ -26,59 +26,62 @@ const colorToStyle = (colors) => {
 	return style;
 };
 
-const SortableItem = SortableElement(({
-	item, actions, index, linkGen,
-}) => {
-	// console.log(item);
-	const link = linkGen(item);
-	const colors = getColorsFromName(item.name);
+const SortableItem = SortableElement(
+	({
+		item, actions, index, linkGen, colorNames,
+	}) => {
+		// console.log(item);
+		const link = linkGen(item);
+		const colors = getColorsFromName(item.name);
+		const colorStyles = colorNames ? colorToStyle(colors) : {};
 
-	return (
-		<li className="trackerlist-item">
-			{(!!link && (
-				<NavLink to={linkGen(item)} className="trackerlist-item__link">
-					<span
-						className={classnames({
-							'trackerlist-item__link__name': true,
-							'trackerlist-item__link__name--monster': item.stats,
-							'trackerlist-item__link__name--player': !item.stats,
-						})}
-						style={colorToStyle(colors)}
-					>
-						{item.name}
-					</span>
-				</NavLink>
-			)) || (
-				<div className="trackerlist-item__link">
-					<span
-						className={classnames({
-							'trackerlist-item__link__name': true,
-							'trackerlist-item__link__name--monster': item.stats,
-							'trackerlist-item__link__name--player': !item.stats,
-						})}
-						style={colorToStyle(colors)}
-					>
-						{item.name} {index}
-					</span>
-				</div>
-			)}
+		return (
+			<li className="trackerlist-item">
+				{(!!link && (
+					<NavLink to={linkGen(item)} className="trackerlist-item__link">
+						<span
+							className={classnames({
+								'trackerlist-item__link__name': true,
+								'trackerlist-item__link__name--monster': item.stats,
+								'trackerlist-item__link__name--player': !item.stats,
+							})}
+							style={colorStyles}
+						>
+							{item.name}
+						</span>
+					</NavLink>
+				)) || (
+					<div className="trackerlist-item__link">
+						<span
+							className={classnames({
+								'trackerlist-item__link__name': true,
+								'trackerlist-item__link__name--monster': item.stats,
+								'trackerlist-item__link__name--player': !item.stats,
+							})}
+							style={colorStyles}
+						>
+							{item.name} {index}
+						</span>
+					</div>
+				)}
 
-			<span className="trackerlist-item__actions">
-				{actions.map((action) => (
-					<button
-						key={action.key}
-						type="submit"
-						className="trackerlist-item__actions__button"
-						onClick={() => action.onClick(item)}
-						title={action.title}
-					>
-						<img src={action.glyph} alt="-" height="20" width="20" />
-					</button>
-				))}
-			</span>
-		</li>
-	);
-});
+				<span className="trackerlist-item__actions">
+					{actions.map((action) => (
+						<button
+							key={action.key}
+							type="submit"
+							className="trackerlist-item__actions__button"
+							onClick={() => action.onClick(item)}
+							title={action.title}
+						>
+							<img src={action.glyph} alt="-" height="20" width="20" />
+						</button>
+					))}
+				</span>
+			</li>
+		);
+	},
+);
 
 SortableItem.propTypes = {
 	actions: PropTypes.arrayOf(PropTypes.shape({})),
@@ -92,7 +95,7 @@ SortableItem.defaultProps = {
 
 const SortableList = SortableContainer(
 	({
-		items, disableDragging, actions, linkGen,
+		items, disableDragging, actions, linkGen, colorNames,
 	}) => {
 		return (
 			<ol className="trackerlist">
@@ -105,6 +108,7 @@ const SortableList = SortableContainer(
 						disabled={disableDragging}
 						actions={actions}
 						linkGen={linkGen}
+						colorNames={colorNames}
 					/>
 				))}
 			</ol>
@@ -117,6 +121,7 @@ SortableList.propTypes = {
 	items: PROPTYPE_ITEMS.isRequired,
 	onSortEnd: PropTypes.func.isRequired,
 	disableDragging: PropTypes.bool,
+	colorNames: PropTypes.bool,
 };
 
 SortableList.defaultProps = {
@@ -126,6 +131,7 @@ SortableList.defaultProps = {
 	distance: 2,
 	helperClass: 'dragging',
 	linkGen: () => false,
+	colorNames: false,
 };
 
 export default SortableList;
