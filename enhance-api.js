@@ -1,11 +1,11 @@
 const fs = require('fs');
-const uniqueId = require('lodash/uniqueId');
+const shortid = require('shortid');
 
 const data = JSON.parse(fs.readFileSync('src/api/srd-monsters.json'));
 
 const enhancedData = data.map((monster) => {
 	return {
-		id: uniqueId('m'),
+		id: shortid.generate('m'),
 		...monster,
 	};
 });

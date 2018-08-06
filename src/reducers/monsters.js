@@ -1,4 +1,4 @@
-import uniqueId from 'unique-string';
+import shortid from 'shortid';
 import find from 'lodash/find';
 import findIndex from 'lodash/findIndex';
 import without from 'lodash/without';
@@ -30,7 +30,7 @@ function addMonster(state, encounterId, monster) {
 	if (encounterIndex !== -1) {
 		const newEncounters = [...state.encounters];
 		newEncounters[encounterIndex].monsters.push({
-			id: uniqueId(),
+			id: shortid.generate(),
 			name: monster.name,
 			type: TYPE_MONSTER,
 			stats: monster,
@@ -51,7 +51,7 @@ function addEncounter(state) {
 		encounters: [
 			...state.encounters,
 			{
-				id: uniqueId(),
+				id: shortid.generate(),
 				monsters: [],
 			},
 		],
