@@ -1,4 +1,3 @@
-import without from 'lodash/without';
 import filter from 'lodash/filter';
 import sortBy from 'lodash/sortBy';
 import find from 'lodash/find';
@@ -23,7 +22,7 @@ export const INITIATIVE_TAKE_DAMAGE = 'initiative/TAKE_DAMAGE';
 export const INITIATIVE_HEAL_DAMAGE = 'initiative/HEAL_DAMAGE';
 
 const storageKey = 'stoogeInitiative';
-const storageVersion = 2;
+const storageVersion = 3;
 const defaultState = {
 	actors: [],
 };
@@ -68,7 +67,10 @@ function addActor(state, actor) {
 }
 
 function removeActor(state, actor) {
-	const actors = without([...state.actors], actor);
+	const actors = filter(
+		[...state.actors],
+		(stateActor) => stateActor.id !== actor.id,
+	);
 	if (actors.length < state.actors.length) {
 		const newState = {
 			...state,

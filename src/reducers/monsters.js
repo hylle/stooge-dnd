@@ -13,7 +13,7 @@ export const MONSTERS_REMOVE_ENCOUNTER = 'monsters/MONSTERS_REMOVE_ENCOUNTER';
 export const MONSTERS_SELECT_ENCOUNTER = 'monsters/MONSTERS_SELECT_ENCOUNTER';
 
 const storageKey = 'stoogeMonsters';
-const storageVersion = 2;
+const storageVersion = 3;
 const defaultState = {
 	encounters: [],
 	selectedEncounter: false,

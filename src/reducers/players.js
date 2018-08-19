@@ -10,7 +10,7 @@ export const PLAYERS_REMOVE = 'players/PLAYERS_REMOVE';
 export const PLAYERS_MOVE = 'players/PLAYERS_MOVE';
 
 const storageKey = 'stoogePlayers';
-const storageVersion = 2;
+const storageVersion = 3;
 const defaultState = {
 	items: [],
 };
