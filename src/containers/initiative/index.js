@@ -9,10 +9,16 @@ import SortableList from '../../components/list';
 
 // import IconMinotaur from './minotaur.svg';
 // import IconSwordman from './swordman.svg';
+import IconRoll from './roll.svg';
 
 import './initiative.css';
 import SidebarLayout from '../../components/sidebarLayout';
-import { INITIATIVE_MOVE } from '../../reducers/initiative';
+import {
+	INITIATIVE_MOVE,
+	INITIATIVE_INIT_ROLL,
+} from '../../reducers/initiative';
+import SidebarActions from '../../components/sidebarActions';
+import HPGauge from './hpGauge';
 
 class InitiativeTracker extends Component {
 	static propTypes = {
@@ -25,6 +31,16 @@ class InitiativeTracker extends Component {
 		return (
 			<SidebarLayout>
 				<Fragment>
+					<SidebarActions
+						buttons={[
+							{
+								key: 'roll-initiative',
+								onClick: this.rollInitiative,
+								glyph: IconRoll,
+								title: 'Input initiative',
+							},
+						]}
+					/>
 					<SortableList
 						items={actors}
 						onSortEnd={this.onSortEnd}
@@ -32,6 +48,7 @@ class InitiativeTracker extends Component {
 							? `/initiative/monster/${item.id}`
 							: `/initiative/player/${item.id}`)
 						}
+						extraComponent={HPGauge}
 					/>
 				</Fragment>
 				<Fragment>
@@ -53,6 +70,15 @@ class InitiativeTracker extends Component {
 			type: INITIATIVE_MOVE,
 			oldIndex,
 			newIndex,
+		});
+	};
+
+	rollInitiative = () => {
+		const { dispatch, actors } = this.props;
+
+		dispatch({
+			type: INITIATIVE_INIT_ROLL,
+			actors,
 		});
 	};
 }

@@ -1,8 +1,17 @@
 import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import isNaN from 'lodash/isNaN';
+import { prettyModifier } from '../../utils/statModifiers';
+
+import IconDamage from './damage.svg';
+import IconHeal from './heal.svg';
 
 import './monsterstats.css';
+import {
+	INITIATIVE_TAKE_DAMAGE,
+	INITIATIVE_HEAL_DAMAGE,
+} from '../../reducers/initiative';
 
 /* eslint-disable no-floating-decimal */
 const CR_TO_XP_TABLE = {
@@ -89,16 +98,6 @@ const SKILLS_NAMES = [
 	'Persuasion',
 ];
 
-const transformModifier = (modifier) => {
-	return modifier >= 0 ? `+${modifier}` : modifier;
-};
-
-const calcModifier = (stat = 10) => {
-	const modifier = Math.floor((stat - 10) / 2);
-
-	return transformModifier(modifier);
-};
-
 const PLAIN_VALUE_FORMATTER = (name, value) => value;
 const joinStats = (
 	title,
@@ -106,7 +105,7 @@ const joinStats = (
 	stats = [],
 	names = [],
 	formatter = (name, value) => {
-		return `${name} ${transformModifier(value)}`;
+		return `${name} ${prettyModifier(value)}`;
 	},
 ) => {
 	const joinedStats = stats
@@ -137,7 +136,7 @@ const keyToNameFormatter = (key) => {
 	return spacedStr.charAt(0).toUpperCase() + spacedStr.slice(1);
 };
 
-const MonsterStats = ({ monster }) => {
+const MonsterStats = ({ monster, dispatch }) => {
 	if (!monster) {
 		return null;
 	}
@@ -146,6 +145,40 @@ const MonsterStats = ({ monster }) => {
 
 	return (
 		<div className="monsterstats">
+			<div>
+				<button
+					type="submit"
+					className="monsterstats__adjust-hp"
+					onClick={() => {
+						const damage = parseInt(prompt('Enter damage amount.'), 10);
+						if (!isNaN(damage)) {
+							dispatch({
+								type: INITIATIVE_TAKE_DAMAGE,
+								actor: monster,
+								damage,
+							});
+						}
+					}}
+				>
+					<img src={IconDamage} alt="Take damage" />
+				</button>
+				<button
+					type="submit"
+					className="monsterstats__adjust-hp monsterstats__adjust-hp--heal"
+					onClick={() => {
+						const heal = parseInt(prompt('Enter healing amount.'), 10);
+						if (!isNaN(heal)) {
+							dispatch({
+								type: INITIATIVE_HEAL_DAMAGE,
+								actor: monster,
+								heal,
+							});
+						}
+					}}
+				>
+					<img src={IconHeal} alt="Heal" />
+				</button>
+			</div>
 			<h2>{monster.name}</h2>
 			<strong>
 				{`
@@ -182,7 +215,7 @@ const MonsterStats = ({ monster }) => {
 							'charisma',
 						].map((ability) => (
 							<td key={ability}>
-								{stats[ability]} ({calcModifier(stats[ability])})
+								{stats[ability]} ({prettyModifier(stats[ability])})
 							</td>
 						))}
 					</tr>
@@ -264,6 +297,7 @@ const MonsterStats = ({ monster }) => {
 };
 
 MonsterStats.propTypes = {
+	dispatch: PropTypes.func.isRequired,
 	monster: PropTypes.oneOfType([PropTypes.shape({}), PropTypes.oneOf([false])]),
 };
 

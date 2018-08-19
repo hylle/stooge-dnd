@@ -13,7 +13,7 @@ export const MONSTERS_REMOVE_ENCOUNTER = 'monsters/MONSTERS_REMOVE_ENCOUNTER';
 export const MONSTERS_SELECT_ENCOUNTER = 'monsters/MONSTERS_SELECT_ENCOUNTER';
 
 const storageKey = 'stoogeMonsters';
-const storageVersion = 1;
+const storageVersion = 2;
 const defaultState = {
 	encounters: [],
 	selectedEncounter: false,
@@ -46,15 +46,18 @@ function addMonster(state, encounterId, monster) {
 }
 
 function addEncounter(state) {
+	const id = shortid.generate();
 	return persistState({
 		...state,
 		encounters: [
 			...state.encounters,
 			{
-				id: shortid.generate(),
+				id,
 				monsters: [],
 			},
 		],
+		selectedEncounter:
+			state.encounters.length === 0 ? id : state.selectedEncounter,
 	});
 }
 

@@ -2,10 +2,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { SortableContainer, SortableElement } from 'react-sortable-hoc';
-import { NavLink } from 'react-router-dom';
 import classnames from 'classnames';
 import getColorsFromName from '../../utils/colorFromName';
 import './list.css';
+import OptionalNavLink from '../optionalLink';
 
 const PROPTYPE_ITEM = PropTypes.shape({
 	name: PropTypes.string.isRequired,
@@ -28,42 +28,38 @@ const colorToStyle = (colors) => {
 
 const SortableItem = SortableElement(
 	({
-		item, actions, index, linkGen, colorNames,
+		item,
+		actions,
+		index,
+		linkGen,
+		colorNames,
+		extraComponent: ExtraComponent,
 	}) => {
 		// console.log(item);
-		const link = linkGen(item);
 		const colors = getColorsFromName(item.name);
 		const colorStyles = colorNames ? colorToStyle(colors) : {};
 
 		return (
 			<li className="trackerlist-item">
-				{(!!link && (
-					<NavLink to={linkGen(item)} className="trackerlist-item__link">
-						<span
-							className={classnames({
-								'trackerlist-item__link__name': true,
-								'trackerlist-item__link__name--monster': item.stats,
-								'trackerlist-item__link__name--player': !item.stats,
-							})}
-							style={colorStyles}
-						>
-							{item.name}
-						</span>
-					</NavLink>
-				)) || (
-					<div className="trackerlist-item__link">
-						<span
-							className={classnames({
-								'trackerlist-item__link__name': true,
-								'trackerlist-item__link__name--monster': item.stats,
-								'trackerlist-item__link__name--player': !item.stats,
-							})}
-							style={colorStyles}
-						>
-							{item.name} {index}
-						</span>
-					</div>
-				)}
+				<OptionalNavLink to={linkGen(item)} className="trackerlist-item__link">
+					<span
+						className={classnames({
+							'trackerlist-item__link__name': true,
+							'trackerlist-item__link__name--monster': item.stats,
+							'trackerlist-item__link__name--player': !item.stats,
+						})}
+						style={colorStyles}
+					>
+						{item.name}
+						{!!item.affix && (
+							<span className="trackerlist-item__link__name__affix">
+								{' '}
+								({item.affix})
+							</span>
+						)}
+					</span>
+					{!!ExtraComponent && <ExtraComponent item={item} id={item.id} />}
+				</OptionalNavLink>
 
 				<span className="trackerlist-item__actions">
 					{actions.map((action) => (
@@ -95,20 +91,26 @@ SortableItem.defaultProps = {
 
 const SortableList = SortableContainer(
 	({
-		items, disableDragging, actions, linkGen, colorNames,
+		items,
+		disableDragging,
+		actions,
+		linkGen,
+		colorNames,
+		extraComponent,
 	}) => {
 		return (
 			<ol className="trackerlist">
-				{items.map((value, index) => (
+				{items.map((item, index) => (
 					<SortableItem
-						key={value.id}
+						key={item.id}
 						index={index}
-						value={value}
-						item={value}
+						value={item}
+						item={item}
 						disabled={disableDragging}
 						actions={actions}
 						linkGen={linkGen}
 						colorNames={colorNames}
+						extraComponent={extraComponent}
 					/>
 				))}
 			</ol>
@@ -122,6 +124,7 @@ SortableList.propTypes = {
 	onSortEnd: PropTypes.func.isRequired,
 	disableDragging: PropTypes.bool,
 	colorNames: PropTypes.bool,
+	extraComponent: PropTypes.func,
 };
 
 SortableList.defaultProps = {
@@ -132,6 +135,7 @@ SortableList.defaultProps = {
 	helperClass: 'dragging',
 	linkGen: () => false,
 	colorNames: false,
+	extraComponent: null,
 };
 
 export default SortableList;
