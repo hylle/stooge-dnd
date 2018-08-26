@@ -19,3 +19,7 @@
     display: block;
     width: 40px;
     height: 40px; }
+
+.monsterstats pre {
+  white-space: pre-wrap;
+  font-family: "Montserrat", sans-serif; }

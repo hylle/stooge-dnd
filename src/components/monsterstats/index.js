@@ -282,7 +282,7 @@ const MonsterStats = ({ monster, dispatch }) => {
 										<em>
 											<strong>{action.name}</strong>
 										</em>{' '}
-										{action.desc}
+										<pre>{action.desc}</pre>
 									</div>
 								))}
 							</div>
