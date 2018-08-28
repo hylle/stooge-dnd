@@ -22,4 +22,5 @@
 
 .monsterstats pre {
   white-space: pre-wrap;
-  font-family: "Montserrat", sans-serif; }
+  font-family: "Montserrat", sans-serif;
+  margin-top: 0; }
