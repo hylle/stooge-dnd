@@ -7,9 +7,11 @@ import findIndex from 'lodash/findIndex';
 import SidebarLayout from '../../components/sidebarLayout';
 import SortableList from '../../components/list';
 import MonsterEncounters from './encounterList';
+import { ADD_ACTOR } from '../../actions';
 import { PLAYERS_ADD } from '../../reducers/players';
-import { MONSTERS_ADD } from '../../reducers/monsters';
+import { MONSTERS_ADD, enhanceMonster } from '../../reducers/monsters';
 import IconAdd from '../../svg/add.svg';
+import IconLightning from '../../svg/lightning.svg';
 
 import './monsters.css';
 
@@ -45,6 +47,23 @@ class MonsterLookup extends Component {
 		} = this.props;
 
 		const hasSelectedEncounter =			findIndex(encounters, ['id', selectedEncounter]) !== -1;
+		const actions = [{
+			key: 'quickAdd',
+			onClick: this.quickAddMonsterToInitiative,
+			title: 'Add to initiative',
+			glyph: IconLightning,
+		}];
+
+
+
+		if (hasSelectedEncounter) {
+			actions.push({
+				key: 'addToEncounter',
+				onClick: this.addMonsterToEncounter,
+				title: 'Add to encounter',
+				glyph: IconAdd,
+			});
+		}
 
 		return (
 			<SidebarLayout>
@@ -63,18 +82,7 @@ class MonsterLookup extends Component {
 						items={this.filterMonsters()}
 						onSortEnd={() => {}}
 						colorNames
-						actions={
-							hasSelectedEncounter
-								? [
-									{
-										key: 'addToEncounter',
-										onClick: this.addMonsterToEncounter,
-										title: 'Add to encounter',
-										glyph: IconAdd,
-									},
-								  ]
-								: []
-						}
+						actions={actions}
 						disableDragging
 					/>
 				</Fragment>
@@ -127,6 +135,18 @@ class MonsterLookup extends Component {
 			});
 			// dispatch(this.createMonsterAddPlayerAction(monster));
 		}
+	};
+
+	quickAddMonsterToInitiative = (monster) => {
+		console.log(monster);
+		const {
+			dispatch,
+		} = this.props;
+
+		dispatch({
+			type: ADD_ACTOR,
+			actor: enhanceMonster(monster),
+		})
 	};
 }
 

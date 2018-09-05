@@ -103,7 +103,9 @@
     bottom: 50%;
     right: 10px;
     z-index: 1;
-    transform: translateY(50%); }
+    transform: translateY(50%);
+    display: flex;
+    flex-direction: row; }
     .trackerlist-item__actions__button {
       display: flex;
       padding: 0;

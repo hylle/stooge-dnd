@@ -173,6 +173,9 @@
 
 		transform: translateY(50%);
 
+		display: flex;
+		flex-direction: row;
+
 		&__button {
 			display: flex;
 			padding: 0;

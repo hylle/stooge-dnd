@@ -25,16 +25,20 @@ const initialState = getInitialStateFromStorage(
 );
 const persistState = createPersistStateFunction(storageKey);
 
+const enhanceMonster = (monster) => {
+	return {
+		id: shortid.generate(),
+		name: monster.name,
+		type: TYPE_MONSTER,
+		stats: monster,
+	};
+}
+
 function addMonster(state, encounterId, monster) {
 	const encounterIndex = findIndex(state.encounters, ['id', encounterId]);
 	if (encounterIndex !== -1) {
 		const newEncounters = [...state.encounters];
-		newEncounters[encounterIndex].monsters.push({
-			id: shortid.generate(),
-			name: monster.name,
-			type: TYPE_MONSTER,
-			stats: monster,
-		});
+		newEncounters[encounterIndex].monsters.push(enhanceMonster(monster));
 
 		return persistState({
 			...state,
@@ -56,8 +60,7 @@ function addEncounter(state) {
 				monsters: [],
 			},
 		],
-		selectedEncounter:
-			state.encounters.length === 0 ? id : state.selectedEncounter,
+		selectedEncounter: id,
 	});
 }
 
@@ -98,3 +101,5 @@ export default (state = initialState, action) => {
 			return state;
 	}
 };
+
+export { enhanceMonster };
