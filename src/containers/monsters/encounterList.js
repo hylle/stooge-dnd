@@ -2,7 +2,6 @@
 import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { SortableContainer, SortableElement } from 'react-sortable-hoc';
 import classnames from 'classnames';
 
 import './encounterList.css';
@@ -10,6 +9,7 @@ import {
 	MONSTERS_ADD_ENCOUNTER,
 	MONSTERS_REMOVE_ENCOUNTER,
 	MONSTERS_SELECT_ENCOUNTER,
+	MONSTERS_REMOVE,
 } from '../../reducers/monsters';
 import { INITIATIVE_TRANSFER_ENCOUNTER } from '../../reducers/initiative';
 
@@ -50,11 +50,28 @@ const transferMonsters = (dispatch, monsters) => {
 	});
 };
 
-const SortableMonster = SortableElement(({ monster, index }) => {
-	return <li>{monster.name}</li>;
-});
+const removeMonster = (dispatch, encounterId, monsterId) => {
+	dispatch({
+		type: MONSTERS_REMOVE,
+		encounterId,
+		monsterId,
+	});
+};
 
-const EncounterList = SortableContainer((props) => {
+const MonsterItem = ({ dispatch, encounter, monster, index }) => {
+	return (
+		<li>
+			{monster.name}
+			<button
+				className="encounter-list__encounter__monster__button"
+				onClick={() => removeMonster(dispatch, encounter.id, monster.id)}>
+				-
+			</button>
+		</li>
+	);
+};
+
+const EncounterList = (props) => {
 	const { dispatch, encounter, selectedEncounter } = props;
 	const { monsters } = encounter;
 	return (
@@ -98,7 +115,7 @@ const EncounterList = SortableContainer((props) => {
 
 			<ol className="encounter-list__encounter__monsters">
 				{monsters.map((monster, index) => (
-					<SortableMonster
+					<MonsterItem
 						key={monster.id + index}
 						index={index}
 						monster={monster}
@@ -108,7 +125,7 @@ const EncounterList = SortableContainer((props) => {
 			</ol>
 		</div>
 	);
-});
+};
 
 EncounterList.defaultProps = {
 	...EncounterList.defaultProps,
@@ -130,7 +147,6 @@ const MonsterEncounters = ({ dispatch, encounters, selectedEncounter }) => {
 						dispatch={dispatch}
 						encounter={encounter}
 						selectedEncounter={selectedEncounter}
-						onSortEnd={() => {}}
 					/>
 				))}
 			</div>

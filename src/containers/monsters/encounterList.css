@@ -34,3 +34,5 @@
         margin: 0;
         padding: 0;
         line-height: 40px; }
+    .encounter-list__encounter__monster__button {
+      float: right; }
