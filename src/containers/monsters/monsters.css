@@ -1,4 +1,5 @@
 .monstersearch {
+  display: block;
   height: 4em;
   width: 100%;
   background: transparent;
@@ -9,3 +10,7 @@
   outline: none; }
   .monstersearch::placeholder {
     color: rgba(255, 255, 255, 0.3); }
+  .monstersearch:-webkit-autofill, .monstersearch:-webkit-autofill:hover, .monstersearch:-webkit-autofill:focus {
+    -webkit-text-fill-color: #fff;
+    -webkit-box-shadow: 0 0 0px 1000px #2E3E4D inset;
+    background-color: #2E3E4D !important; }

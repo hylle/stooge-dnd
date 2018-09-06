@@ -1,3 +1,5 @@
+@import 'import';
+
 .sidebarlayout {
 	display: flex;
 	flex-direction: row;
@@ -7,7 +9,7 @@
 		flex: 0 0 300px;
 		display: flex;
 		flex-direction: column;
-		background: #2E3E4D;
+		background: $sidebar-bg;
 
 		max-height: 100%;
 		overflow-y: auto;
