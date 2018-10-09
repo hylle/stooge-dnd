@@ -183,7 +183,7 @@ const MonsterStats = ({ monster, dispatch }) => {
 			{!!stats.customStatLink && (
 				<>
 					<h2>{monster.name}</h2>
-					<iframe src={stats.customStatLink} sandbox=""></iframe>
+					<iframe src={stats.customStatLink} sandbox="" title={monster.name}></iframe>
 				</>
 			)}
 
