@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import './sidebarActions.css';
+import './sidebarActions.scss';
 
 const SidebarActions = ({ buttons }) => (
 	<div className="sidebar-actions">

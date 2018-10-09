@@ -16,7 +16,7 @@ import SidebarActions from '../../components/sidebarActions';
 
 import IconSwordman from './swordman.svg';
 import IconRemove from '../../svg/remove.svg';
-import './party.css';
+import './party.scss';
 import { ADD_ACTOR, REMOVE_ACTOR } from '../../actions';
 
 class PartyManager extends Component {
