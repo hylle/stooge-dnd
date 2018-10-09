@@ -179,119 +179,131 @@ const MonsterStats = ({ monster, dispatch }) => {
 					<img src={IconHeal} alt="Heal" />
 				</button>
 			</div>
-			<h2>{monster.name}</h2>
-			<strong>
-				{`
-					${stats.size}
-					${stats.type}${stats.subtype ? ` (${stats.subtype})` : ''},
-					${stats.alignment}
-				`}
-			</strong>
-			<hr />
-			<div>
-				<strong>AC:</strong> {stats.armor_class}
-				<br />
-				<strong>HP:</strong> {stats.hit_points} ({stats.hit_dice})<br />
-				<strong>Speed:</strong> {stats.speed}
-				<br />
-			</div>
-			<hr />
-			<table width="100%">
-				<thead>
-					<tr>
-						{['STR', 'DEX', 'CON', 'INT', 'WIS', 'CHA'].map((ability) => (
-							<th key={ability}>{ability}</th>
-						))}
-					</tr>
-				</thead>
-				<tbody>
-					<tr>
-						{[
-							'strength',
-							'dexterity',
-							'constitution',
-							'intelligence',
-							'wisdom',
-							'charisma',
-						].map((ability) => (
-							<td key={ability}>
-								{stats[ability]} ({prettyModifier(stats[ability])})
-							</td>
-						))}
-					</tr>
-				</tbody>
-			</table>
 
-			<hr />
+			{!!stats.customStatLink && (
+				<>
+					<h2>{monster.name}</h2>
+					<iframe src={stats.customStatLink} sandbox=""></iframe>
+				</>
+			)}
 
-			<div>
-				{joinStats(
-					'Saving throws',
-					stats,
-					[
-						'strength_save',
-						'dexterity_save',
-						'constitution_save',
-						'intelligence_save',
-						'wisdom_save',
-						'charisma_save',
-					],
-					['Str', 'Dex', 'Con', 'Int', 'Wis', 'Cha'],
-				)}
-			</div>
-			<div>{joinStats('Skills', stats, SKILLS, SKILLS_NAMES)}</div>
-			{[
-				'damage_vulnerabilities',
-				'damage_resistances',
-				'damage_immunities',
-				'condition_immunities',
-				'senses',
-				'languages',
-			].map((key) => (
-				<div key={key}>
-					{joinStats(
-						keyToNameFormatter(key),
-						stats,
-						[key],
-						[],
-						PLAIN_VALUE_FORMATTER,
-					)}
-				</div>
-			))}
-
-			<div>
-				{joinStats(
-					'Challenge',
-					stats,
-					['challenge_rating'],
-					[],
-					(name, value) => CR2XP(value),
-				)}
-			</div>
-
-			{['special_abilities', 'actions', 'legendary_actions'].map((section) => {
-				if (stats[section]) {
-					return (
-						<Fragment key={section}>
-							<hr />
-							<div>
-								<h4>{keyToNameFormatter(section)}</h4>
-
-								{stats[section].map((action, i) => (
-									<div key={action.name}>
-										<em>
-											<strong>{action.name}</strong>
-										</em>{' '}
-										<pre>{action.desc}</pre>
-									</div>
+			{!stats.customStatLink && (
+				<>
+					<h2>{monster.name}</h2>
+					<strong>
+						{`
+							${stats.size}
+							${stats.type}${stats.subtype ? ` (${stats.subtype})` : ''},
+							${stats.alignment}
+						`}
+					</strong>
+					<hr />
+					<div>
+						<strong>AC:</strong> {stats.armor_class}
+						<br />
+						<strong>HP:</strong> {stats.hit_points} ({stats.hit_dice})<br />
+						<strong>Speed:</strong> {stats.speed}
+						<br />
+					</div>
+					<hr />
+					<table width="100%">
+						<thead>
+							<tr>
+								{['STR', 'DEX', 'CON', 'INT', 'WIS', 'CHA'].map((ability) => (
+									<th key={ability}>{ability}</th>
 								))}
-							</div>
-						</Fragment>
-					);
-				}
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								{[
+									'strength',
+									'dexterity',
+									'constitution',
+									'intelligence',
+									'wisdom',
+									'charisma',
+								].map((ability) => (
+									<td key={ability}>
+										{stats[ability]} ({prettyModifier(stats[ability])})
+									</td>
+								))}
+							</tr>
+						</tbody>
+					</table>
 
-				return null;
-			})}
+					<hr />
+
+					<div>
+						{joinStats(
+							'Saving throws',
+							stats,
+							[
+								'strength_save',
+								'dexterity_save',
+								'constitution_save',
+								'intelligence_save',
+								'wisdom_save',
+								'charisma_save',
+							],
+							['Str', 'Dex', 'Con', 'Int', 'Wis', 'Cha'],
+						)}
+					</div>
+					<div>{joinStats('Skills', stats, SKILLS, SKILLS_NAMES)}</div>
+					{[
+						'damage_vulnerabilities',
+						'damage_resistances',
+						'damage_immunities',
+						'condition_immunities',
+						'senses',
+						'languages',
+					].map((key) => (
+						<div key={key}>
+							{joinStats(
+								keyToNameFormatter(key),
+								stats,
+								[key],
+								[],
+								PLAIN_VALUE_FORMATTER,
+							)}
+						</div>
+					))}
+
+					<div>
+						{joinStats(
+							'Challenge',
+							stats,
+							['challenge_rating'],
+							[],
+							(name, value) => CR2XP(value),
+						)}
+					</div>
+
+					{['special_abilities', 'actions', 'legendary_actions'].map((section) => {
+						if (stats[section]) {
+							return (
+								<Fragment key={section}>
+									<hr />
+									<div>
+										<h4>{keyToNameFormatter(section)}</h4>
+
+										{stats[section].map((action, i) => (
+											<div key={action.name}>
+												<em>
+													<strong>{action.name}</strong>
+												</em>{' '}
+												<pre>{action.desc}</pre>
+											</div>
+										))}
+									</div>
+								</Fragment>
+							);
+						}
+
+						return null;
+					})}
+				</>
+			)}
 		</div>
 	);
 };

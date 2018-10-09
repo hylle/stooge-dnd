@@ -10,6 +10,7 @@ import {
 	MONSTERS_REMOVE_ENCOUNTER,
 	MONSTERS_SELECT_ENCOUNTER,
 	MONSTERS_REMOVE,
+	MONSTERS_ADD_CUSTOM,
 } from '../../reducers/monsters';
 import { INITIATIVE_TRANSFER_ENCOUNTER } from '../../reducers/initiative';
 
@@ -22,6 +23,19 @@ const PROPTYPE_ITEMS = PropTypes.arrayOf(PROPTYPE_ENCOUNTER);
 const addEncounter = (dispatch) => {
 	dispatch({
 		type: MONSTERS_ADD_ENCOUNTER,
+	});
+};
+
+const addCustomEncounter = (dispatch) => {
+	const monster = {
+		name: window.prompt('Monster name?'),
+		hit_dice: window.prompt('Hit dice? (ex. 2d8)'),
+		customStatLink: window.prompt('Stats link? ( https://www.aidedd.org/dnd-filters/monsters.php )'),
+	};
+
+	dispatch({
+		type: MONSTERS_ADD_CUSTOM,
+		monster,
 	});
 };
 
@@ -138,6 +152,9 @@ const MonsterEncounters = ({ dispatch, encounters, selectedEncounter }) => {
 				<div className="encounter-list__actions">
 					<button type="submit" onClick={() => addEncounter(dispatch)}>
 						New encounter
+					</button>
+					<button type="submit" onClick={() => addCustomEncounter(dispatch)}>
+						Add custom monster
 					</button>
 				</div>
 

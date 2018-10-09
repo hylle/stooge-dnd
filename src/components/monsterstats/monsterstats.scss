@@ -41,6 +41,13 @@
 		font-family: $ff-mont;
 		margin-top: 0;
 	}
+
+	iframe {
+		border: none;
+		margin-top: 20px;
+		width: 100%;
+		height: calc(100vh - 206px);
+	}
 }
 
 
