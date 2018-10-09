@@ -99,8 +99,6 @@ class MonsterLookup extends Component {
 		const { search, monsters } = this.state;
 		const { monsters: { customMonsters } } = this.props;
 
-		console.log(customMonsters);
-
 		let filteredMonsters = [...monsters, ...customMonsters];
 		if (search) {
 			filteredMonsters = filter(filteredMonsters, (monster) => {
@@ -144,7 +142,6 @@ class MonsterLookup extends Component {
 	};
 
 	quickAddMonsterToInitiative = (monster) => {
-		console.log(monster);
 		const {
 			dispatch,
 		} = this.props;
