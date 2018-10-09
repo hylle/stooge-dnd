@@ -13,7 +13,7 @@ import { MONSTERS_ADD, enhanceMonster } from '../../reducers/monsters';
 import IconAdd from '../../svg/add.svg';
 import IconLightning from '../../svg/lightning.svg';
 
-import './monsters.css';
+import './monsters.scss';
 
 class MonsterLookup extends Component {
 	static propTypes = {

@@ -12,7 +12,7 @@ import IconMonster from './monster.svg';
 import IconClash from './sword-clash.svg';
 import IconParty from './party.svg';
 
-import './app.css';
+import './app.scss';
 
 const App = () => (
 	<HashRouter>

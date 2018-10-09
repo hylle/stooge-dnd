@@ -11,7 +11,7 @@ import SortableList from '../../components/list';
 // import IconSwordman from './swordman.svg';
 import IconRoll from './roll.svg';
 
-import './initiative.css';
+import './initiative.scss';
 import SidebarLayout from '../../components/sidebarLayout';
 import {
 	INITIATIVE_MOVE,

@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import classnames from 'classnames';
 
-import './encounterList.css';
+import './encounterList.scss';
 import {
 	MONSTERS_ADD_ENCOUNTER,
 	MONSTERS_REMOVE_ENCOUNTER,

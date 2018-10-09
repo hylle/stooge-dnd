@@ -7,7 +7,7 @@ import { prettyModifier } from '../../utils/statModifiers';
 import IconDamage from './damage.svg';
 import IconHeal from './heal.svg';
 
-import './monsterstats.css';
+import './monsterstats.scss';
 import {
 	INITIATIVE_TAKE_DAMAGE,
 	INITIATIVE_HEAL_DAMAGE,

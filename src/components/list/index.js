@@ -4,8 +4,9 @@ import PropTypes from 'prop-types';
 import { SortableContainer, SortableElement } from 'react-sortable-hoc';
 import classnames from 'classnames';
 import getColorsFromName from '../../utils/colorFromName';
-import './list.css';
 import OptionalNavLink from '../optionalLink';
+
+import './list.scss';
 
 const PROPTYPE_ITEM = PropTypes.shape({
 	name: PropTypes.string.isRequired,

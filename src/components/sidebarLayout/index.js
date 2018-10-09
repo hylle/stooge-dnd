@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import './sidebarLayout.css';
+import './sidebarLayout.scss';
 
 const SidebarLayout = ({ children }) => {
 	return (
