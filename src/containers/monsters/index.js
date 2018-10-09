@@ -46,7 +46,7 @@ class MonsterLookup extends Component {
 			monsters: { encounters, selectedEncounter },
 		} = this.props;
 
-		const hasSelectedEncounter =			findIndex(encounters, ['id', selectedEncounter]) !== -1;
+		const hasSelectedEncounter = findIndex(encounters, ['id', selectedEncounter]) !== -1;
 		const actions = [{
 			key: 'quickAdd',
 			onClick: this.quickAddMonsterToInitiative,
@@ -65,6 +65,7 @@ class MonsterLookup extends Component {
 			});
 		}
 
+
 		return (
 			<SidebarLayout>
 				<Fragment>
@@ -72,6 +73,7 @@ class MonsterLookup extends Component {
 						<input
 							className="monstersearch"
 							name="monstersearch"
+							autoComplete="off"
 							placeholder="Search for monsters..."
 							value={search}
 							onInput={this.onInput}
@@ -95,7 +97,11 @@ class MonsterLookup extends Component {
 
 	filterMonsters = () => {
 		const { search, monsters } = this.state;
-		let filteredMonsters = monsters;
+		const { monsters: { customMonsters } } = this.props;
+
+		console.log(customMonsters);
+
+		let filteredMonsters = [...monsters, ...customMonsters];
 		if (search) {
 			filteredMonsters = filter(filteredMonsters, (monster) => {
 				return monster.name.toLowerCase().indexOf(search.toLowerCase()) !== -1;

@@ -1,3 +1,4 @@
+import produce from 'immer';
 import shortid from 'shortid';
 import find from 'lodash/find';
 import findIndex from 'lodash/findIndex';
@@ -9,15 +10,17 @@ import createPersistStateFunction, {
 
 export const TYPE_MONSTER = 'monsters/TYPE_MONSTER';
 export const MONSTERS_ADD = 'monsters/MONSTERS_ADD';
+export const MONSTERS_ADD_CUSTOM = 'monsters/MONSTERS_ADD_CUSTOM';
 export const MONSTERS_REMOVE = 'monsters/MONSTERS_REMOVE';
 export const MONSTERS_ADD_ENCOUNTER = 'monsters/MONSTERS_ADD_ENCOUNTER';
 export const MONSTERS_REMOVE_ENCOUNTER = 'monsters/MONSTERS_REMOVE_ENCOUNTER';
 export const MONSTERS_SELECT_ENCOUNTER = 'monsters/MONSTERS_SELECT_ENCOUNTER';
 
 const storageKey = 'stoogeMonsters';
-const storageVersion = 3;
+const storageVersion = 4;
 const defaultState = {
 	encounters: [],
+	customMonsters: [],
 	selectedEncounter: false,
 };
 const initialState = getInitialStateFromStorage(
@@ -110,10 +113,23 @@ function selectedEncounter(state, encounterId) {
 	return state;
 }
 
+function addCustomMonster(state, monster) {
+	if (monster && monster.name && monster.hit_dice && monster.customStatLink) {
+		return persistState(produce(state, (draft) => {
+			monster.id = shortid.generate();
+			draft.customMonsters.push(monster);
+		}));
+	}
+
+	return state;
+}
+
 export default (state = initialState, action) => {
 	switch (action.type) {
 		case MONSTERS_ADD:
 			return addMonster(state, action.encounterId, action.monster);
+		case MONSTERS_ADD_CUSTOM:
+			return addCustomMonster(state, action.monster);
 		case MONSTERS_REMOVE:
 			return removeMonster(state, action.encounterId, action.monsterId);
 		case MONSTERS_ADD_ENCOUNTER:
