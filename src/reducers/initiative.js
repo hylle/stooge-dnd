@@ -1,6 +1,7 @@
 import filter from 'lodash/filter';
 import sortBy from 'lodash/sortBy';
 import find from 'lodash/find';
+import produce from 'immer';
 // import forEach from 'lodash/forEach';
 // import sample from 'lodash/sample';
 
@@ -25,6 +26,7 @@ const storageKey = 'stoogeInitiative';
 const storageVersion = 3;
 const defaultState = {
 	actors: [],
+	currentActor: 0,
 };
 const initialState = getInitialStateFromStorage(
 	defaultState,
