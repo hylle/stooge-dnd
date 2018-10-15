@@ -24,7 +24,7 @@ export const INITIATIVE_STEP_FORWARD = 'initiative/STEP_FORWARD';
 export const INITIATIVE_STEP_BACK = 'initiative/STEP_BACK';
 
 const storageKey = 'stoogeInitiative';
-const storageVersion = 3;
+const storageVersion = 4;
 const defaultState = {
 	actors: [],
 	currentActor: 0,
