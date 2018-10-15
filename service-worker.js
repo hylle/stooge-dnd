@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/3.6.2/workbox-sw.js");
 
 importScripts(
-  "/stooge-dnd/precache-manifest.aa9c4953d10ddbc33b87a34ff6fd08bf.js"
+  "/stooge-dnd/precache-manifest.8f45857db2332a1c2b54eb18646a3eee.js"
 );
 
 workbox.clientsClaim();

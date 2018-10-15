@@ -1,23 +1,23 @@
 self.__precacheManifest = [
   {
-    "revision": "56287acdcf711569122dd32a9ee56556",
-    "url": "/stooge-dnd/static/media/add.56287acd.svg"
+    "revision": "cf82d10714fce741df8ce340a01583cc",
+    "url": "/stooge-dnd/static/media/step-prev.cf82d107.svg"
   },
   {
-    "revision": "dced8b1860e97644cbae",
-    "url": "/stooge-dnd/static/css/main.84cdfeff.chunk.css"
+    "revision": "4a8d32f610bfb11b7af0",
+    "url": "/stooge-dnd/static/css/main.c5aec581.chunk.css"
   },
   {
-    "revision": "dfd44824f6f781929c78",
-    "url": "/stooge-dnd/static/js/monsters.dfd44824.chunk.js"
+    "revision": "3b73e08a7a8ff6bf184e",
+    "url": "/stooge-dnd/static/js/monsters.3b73e08a.chunk.js"
   },
   {
-    "revision": "60df1f82dd73ed03c9e5",
-    "url": "/stooge-dnd/static/js/2.60df1f82.chunk.js"
+    "revision": "515c5de93a0e8d93a81c",
+    "url": "/stooge-dnd/static/js/2.515c5de9.chunk.js"
   },
   {
-    "revision": "572ab2a5f6ce52231efd",
-    "url": "/stooge-dnd/static/js/runtime~main.572ab2a5.js"
+    "revision": "98967418953062514d97",
+    "url": "/stooge-dnd/static/js/runtime~main.98967418.js"
   },
   {
     "revision": "f6442147f9b4c3e0c3a5d4879511827f",
@@ -32,8 +32,16 @@ self.__precacheManifest = [
     "url": "/stooge-dnd/static/media/roll.7417789e.svg"
   },
   {
-    "revision": "dced8b1860e97644cbae",
-    "url": "/stooge-dnd/static/js/main.dced8b18.chunk.js"
+    "revision": "240eee17fb700c61f5f23ee9ad964492",
+    "url": "/stooge-dnd/static/media/step-next.240eee17.svg"
+  },
+  {
+    "revision": "4a8d32f610bfb11b7af0",
+    "url": "/stooge-dnd/static/js/main.4a8d32f6.chunk.js"
+  },
+  {
+    "revision": "56287acdcf711569122dd32a9ee56556",
+    "url": "/stooge-dnd/static/media/add.56287acd.svg"
   },
   {
     "revision": "1ce3a3a044dfaa9a65c1a294979c737a",
@@ -64,7 +72,7 @@ self.__precacheManifest = [
     "url": "/stooge-dnd/static/media/party.f0c05216.svg"
   },
   {
-    "revision": "bb8813e86eef67fc7b206cb62565f21d",
+    "revision": "e57e3eeba3dc5b5f9bbe3740ae8a48c1",
     "url": "/stooge-dnd/index.html"
   }
 ];
