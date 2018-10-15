@@ -115,6 +115,11 @@
 
 				transform: translate3d(-200%, 0, 0);
 				transition: transform 200ms, opacity 200ms;
+
+				&--dead {
+					opacity: .7;
+					transform: translate3d(0, 0, 0);
+				}
 			}
 		}
 

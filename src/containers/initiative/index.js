@@ -10,15 +10,31 @@ import SortableList from '../../components/list';
 // import IconMinotaur from './minotaur.svg';
 // import IconSwordman from './swordman.svg';
 import IconRoll from './roll.svg';
+import IconStepNext from './step-next.svg';
+import IconStepPrev from './step-prev.svg';
 
 import './initiative.scss';
 import SidebarLayout from '../../components/sidebarLayout';
 import {
 	INITIATIVE_MOVE,
 	INITIATIVE_INIT_ROLL,
+	INITIATIVE_STEP_FORWARD,
+	INITIATIVE_STEP_BACK,
 } from '../../reducers/initiative';
 import SidebarActions from '../../components/sidebarActions';
 import HPGauge from './hpGauge';
+import TurnMarker from './turnMarker';
+
+const Extra = connect((state) => ({
+	currentActor: state.initiative.currentActor,
+}))(({ item, currentActor, position }) => {
+	return (
+		<>
+			<HPGauge item={item} id={item.id} />
+			<TurnMarker currentActor={currentActor} position={position} />
+		</>
+	);
+});
 
 class InitiativeTracker extends Component {
 	static propTypes = {
@@ -39,6 +55,18 @@ class InitiativeTracker extends Component {
 								glyph: IconRoll,
 								title: 'Input initiative',
 							},
+							{
+								key: 'step-prev',
+								onClick: this.stepBackInitiative,
+								glyph: IconStepPrev,
+								title: 'Next initiative',
+							},
+							{
+								key: 'step-next',
+								onClick: this.stepForwardInitiative,
+								glyph: IconStepNext,
+								title: 'Next initiative',
+							},
 						]}
 					/>
 					<SortableList
@@ -48,7 +76,7 @@ class InitiativeTracker extends Component {
 							? `/initiative/monster/${item.id}`
 							: `/initiative/player/${item.id}`)
 						}
-						extraComponent={HPGauge}
+						extraComponent={Extra}
 					/>
 				</Fragment>
 				<Fragment>
@@ -79,6 +107,22 @@ class InitiativeTracker extends Component {
 		dispatch({
 			type: INITIATIVE_INIT_ROLL,
 			actors,
+		});
+	};
+
+	stepForwardInitiative = () => {
+		const { dispatch } = this.props;
+
+		dispatch({
+			type: INITIATIVE_STEP_FORWARD,
+		});
+	};
+
+	stepBackInitiative = () => {
+		const { dispatch } = this.props;
+
+		dispatch({
+			type: INITIATIVE_STEP_BACK,
 		});
 	};
 }

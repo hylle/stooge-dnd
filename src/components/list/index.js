@@ -31,7 +31,7 @@ const SortableItem = SortableElement(
 	({
 		item,
 		actions,
-		index,
+		position,
 		linkGen,
 		colorNames,
 		extraComponent: ExtraComponent,
@@ -59,7 +59,9 @@ const SortableItem = SortableElement(
 							</span>
 						)}
 					</span>
-					{!!ExtraComponent && <ExtraComponent item={item} id={item.id} />}
+					{!!ExtraComponent && (
+						<ExtraComponent item={item} id={item.id} position={position} />
+					)}
 				</OptionalNavLink>
 
 				<span className="trackerlist-item__actions">
@@ -105,6 +107,7 @@ const SortableList = SortableContainer(
 					<SortableItem
 						key={item.id}
 						index={index}
+						position={index}
 						value={item}
 						item={item}
 						disabled={disableDragging}

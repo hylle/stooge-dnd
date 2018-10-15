@@ -1,8 +1,8 @@
+/* eslint-disable no-param-reassign */
 import filter from 'lodash/filter';
 import sortBy from 'lodash/sortBy';
 import find from 'lodash/find';
-// import forEach from 'lodash/forEach';
-// import sample from 'lodash/sample';
+import produce from 'immer';
 
 import createPersistStateFunction, {
 	getInitialStateFromStorage,
@@ -20,11 +20,14 @@ export const INITIATIVE_CLEAR_MONSTERS = 'initiative/CLEAR_MONSTERS';
 export const INITIATIVE_SET_INITIATIVE = 'initiative/SET_INITIATIVE';
 export const INITIATIVE_TAKE_DAMAGE = 'initiative/TAKE_DAMAGE';
 export const INITIATIVE_HEAL_DAMAGE = 'initiative/HEAL_DAMAGE';
+export const INITIATIVE_STEP_FORWARD = 'initiative/STEP_FORWARD';
+export const INITIATIVE_STEP_BACK = 'initiative/STEP_BACK';
 
 const storageKey = 'stoogeInitiative';
-const storageVersion = 3;
+const storageVersion = 4;
 const defaultState = {
 	actors: [],
+	currentActor: 0,
 };
 const initialState = getInitialStateFromStorage(
 	defaultState,
@@ -34,7 +37,6 @@ const initialState = getInitialStateFromStorage(
 const persistState = createPersistStateFunction(storageKey);
 
 function moveActors(state, oldIndex, newIndex) {
-	// console.log({ oldIndex, newIndex });
 	const newState = {
 		...state,
 		actors: arrayMove(state.actors, oldIndex, newIndex),
@@ -141,6 +143,24 @@ function healDamage(state, actor, heal) {
 	return takeDamage(state, actor, -heal);
 }
 
+function stepForwardInitiative(state) {
+	return produce(state, (draft) => {
+		const nextActor = draft.currentActor + 1;
+		draft.currentActor = nextActor >= draft.actors.length ? 0 : nextActor;
+
+		return draft;
+	});
+}
+
+function stepBackInitiative(state) {
+	return produce(state, (draft) => {
+		const prevActor = draft.currentActor - 1;
+		draft.currentActor = prevActor < 0 ? draft.actors.length - 1 : prevActor;
+
+		return draft;
+	});
+}
+
 export default (state = initialState, action) => {
 	switch (action.type) {
 		case INITIATIVE_ADD:
@@ -157,6 +177,10 @@ export default (state = initialState, action) => {
 			return takeDamage(state, action.actor, Math.abs(action.damage));
 		case INITIATIVE_HEAL_DAMAGE:
 			return healDamage(state, action.actor, Math.abs(action.heal));
+		case INITIATIVE_STEP_FORWARD:
+			return stepForwardInitiative(state);
+		case INITIATIVE_STEP_BACK:
+			return stepBackInitiative(state);
 		default:
 			return state;
 	}

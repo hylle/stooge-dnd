@@ -2,9 +2,11 @@ import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import find from 'lodash/find';
+import classnames from 'classnames';
 
 const HPGauge = ({ maxHP, currentHP, initiative }) => {
 	const skull = '☠';
+	const isAlive = currentHP > 0;
 	return (
 		<Fragment>
 			<span className="trackerlist-item__link__initiative">{initiative}</span>
@@ -13,12 +15,15 @@ const HPGauge = ({ maxHP, currentHP, initiative }) => {
 					<span
 						className="trackerlist-item__link__hp__current"
 						style={{
-							height: `${(100 / maxHP) * currentHP}%`,
+							height: `${(100 / maxHP) * Math.max(currentHP, 0)}%`,
 						}}
 					/>
-					<span className="trackerlist-item__link__hp__display">
-						{currentHP <= 0 && <Fragment>{skull} </Fragment>}
-						{currentHP} / {maxHP}
+					<span className={classnames({
+						'trackerlist-item__link__hp__display': true,
+						'trackerlist-item__link__hp__display--dead': true,
+					})}>
+						{!isAlive && <Fragment>{skull} </Fragment>}
+						{isAlive && <Fragment>{currentHP} / {maxHP}</Fragment>}
 					</span>
 				</span>
 			)}
