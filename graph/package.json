@@ -1,0 +1,12 @@
+{
+  "name": "GraphTest",
+  "license": "unlicensed",
+  "scripts": {
+    "dev": "graphpack",
+    "build": "graphpack build",
+    "start": "node ./build/index.js"
+  },
+  "devDependencies": {
+    "graphpack": "^1.0.4"
+  }
+}

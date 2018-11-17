@@ -1,0 +1,44 @@
+type Action {
+  name: String!,
+  desc: String!,
+  attack_bonus: Int!,
+  damage_dice: String,
+  damage_bonus: Int,
+}
+
+type Monster {
+  id: ID!
+  name: String!
+  size: String!
+  type: String!
+  subtype: String!
+  alignment: String!
+  armor_class: Int!
+  hit_points: Int!
+  hit_dice: String!
+  speed: String!
+  strength: Int!
+  dexterity: Int!
+  constitution: Int!
+  intelligence: Int!
+  wisdom: Int!
+  charisma: Int!
+  medicine: Int!
+  religion: Int!
+  damage_vulnerabilities: String!
+  damage_resistances: String!
+  damage_immunities: String!
+  condition_immunities: String!
+  senses: String!
+  languages: String!
+  challenge_rating: Float!
+  actions: [Action]
+  legendary_actions: [Action]
+  special_abilities: [Action]
+}
+
+type Query {
+  authenticationError: String,
+  monster(id: ID): Monster
+  monsters(name: String, names: [String!]): [Monster]!
+}
