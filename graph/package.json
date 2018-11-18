@@ -7,6 +7,12 @@
     "start": "node ./build/index.js"
   },
   "devDependencies": {
-    "graphpack": "^1.0.4"
+    "bookshelf": "^0.13.3",
+    "graphpack": "^1.0.4",
+    "knex": "0.13",
+    "mariasql": "^0.2.6"
+  },
+  "dependencies": {
+    "objection": "^1.4.0"
   }
 }

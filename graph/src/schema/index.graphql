@@ -1,9 +1,10 @@
 type Action {
-  name: String!,
-  desc: String!,
-  attack_bonus: Int!,
-  damage_dice: String,
-  damage_bonus: Int,
+  id: ID!
+  name: String!
+  desc: String!
+  attack_bonus: Int!
+  damage_dice: String
+  damage_bonus: Int
 }
 
 type Monster {
@@ -38,7 +39,7 @@ type Monster {
 }
 
 type Query {
-  authenticationError: String,
+  authenticationError: String
   monster(id: ID): Monster
   monsters(name: String, names: [String!]): [Monster]!
 }
