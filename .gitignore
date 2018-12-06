@@ -19,3 +19,9 @@ node_modules
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+# Backend files
+
+# Build dependencies. Automatically fetched with go build
+vendor/
+backend/build/
