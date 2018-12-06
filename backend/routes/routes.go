@@ -6,9 +6,9 @@ import (
 	"io/ioutil"
 	"log"
 	"net/http"
-	"stoogebackend/internal"
-	"stoogebackend/stoogequeries"
-	"stoogebackend/userhandling"
+	"github.com/hylle/stooge-dnd/backend/internal"
+	"github.com/hylle/stooge-dnd/backend/stoogequeries"
+	"github.com/hylle/stooge-dnd/backend/userhandling"
 
 	"github.com/gorilla/mux"
 )

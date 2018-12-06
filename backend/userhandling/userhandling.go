@@ -3,7 +3,8 @@ package userhandling
 import (
 	"encoding/json"
 	"net/http"
-	"stoogebackend/internal"
+
+	"github.com/hylle/stooge-dnd/backend/internal"
 
 	jwt "github.com/dgrijalva/jwt-go"
 	"golang.org/x/crypto/bcrypt"

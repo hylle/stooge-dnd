@@ -4,7 +4,8 @@ import (
 	"encoding/json"
 	"log"
 	"net/http"
-	"stoogebackend/internal"
+
+	"github.com/hylle/stooge-dnd/backend/internal"
 
 	"github.com/graphql-go/graphql"
 	scribble "github.com/nanobox-io/golang-scribble"

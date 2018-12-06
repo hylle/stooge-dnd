@@ -8,10 +8,11 @@ import (
 	"net/http"
 	"os"
 	"os/signal"
-	"stoogebackend/internal"
-	"stoogebackend/model"
-	"stoogebackend/routes"
 	"time"
+
+	"github.com/hylle/stooge-dnd/backend/internal"
+	"github.com/hylle/stooge-dnd/backend/model"
+	"github.com/hylle/stooge-dnd/backend/routes"
 )
 
 func main() {

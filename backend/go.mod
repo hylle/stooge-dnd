@@ -1,4 +1,4 @@
-module stoogebackend
+module github.com/hylle/stooge-dnd/backend
 
 require (
 	github.com/dgrijalva/jwt-go v3.2.0+incompatible
