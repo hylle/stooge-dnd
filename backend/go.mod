@@ -2,6 +2,7 @@ module github.com/hylle/stooge-dnd/backend
 
 require (
 	github.com/dgrijalva/jwt-go v3.2.0+incompatible
+	github.com/gorilla/context v1.1.1 // indirect
 	github.com/gorilla/mux v1.6.2
 	github.com/graphql-go/graphql v0.7.6
 	github.com/jcelliott/lumber v0.0.0-20160324203708-dd349441af25 // indirect
