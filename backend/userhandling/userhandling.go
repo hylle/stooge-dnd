@@ -80,7 +80,7 @@ func RegisterUserHandler(context *internal.AppContext, r *http.Request) ([]byte,
 		return nil, http.StatusInternalServerError, err
 	}
 	// Next, insert the username, along with the hashed password into the database
-	context.Db.Write("user", newUser.Username, newUser)
+	context.Db.Write("users", newUser.Username, newUser)
 	// We reach this point if the credentials we correctly stored in the database, and the default status of 200 is sent back
 	return nil, http.StatusOK, nil
 }
