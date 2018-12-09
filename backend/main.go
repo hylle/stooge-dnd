@@ -28,7 +28,7 @@ func main() {
 
 	srv := &http.Server{
 		Handler: r,
-		Addr:    "localhost:8080",
+		Addr:    ":8080",
 		// Good practice: enforce timeouts for servers you create!
 		WriteTimeout: 15 * time.Second,
 		ReadTimeout:  15 * time.Second,
