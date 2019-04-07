@@ -15,13 +15,15 @@ const HPGauge = ({ maxHP, currentHP, initiative }) => {
 					<span
 						className="trackerlist-item__link__hp__current"
 						style={{
-							height: `${(100 / maxHP) * Math.max(currentHP, 0)}%`,
+							height: `${Math.min((100 / maxHP) * Math.max(currentHP, 0), 100)}%`,
 						}}
 					/>
-					<span className={classnames({
-						'trackerlist-item__link__hp__display': true,
-						'trackerlist-item__link__hp__display--dead': true,
-					})}>
+					<span
+						className={classnames({
+							'trackerlist-item__link__hp__display': true,
+							'trackerlist-item__link__hp__display--dead': true,
+						})}
+					>
 						{!isAlive && <Fragment>{skull} </Fragment>}
 						{isAlive && <Fragment>{currentHP} / {maxHP}</Fragment>}
 					</span>

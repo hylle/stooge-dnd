@@ -1,6 +1,12 @@
 .sidebar-actions {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 2;
+
 	display: flex;
-	height: 58px;
+  height: 58px;
+  width: 300px;
 
 	padding: 10px;
 	margin-bottom: 10px;

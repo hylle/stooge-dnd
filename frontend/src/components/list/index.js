@@ -42,7 +42,14 @@ const SortableItem = SortableElement(
 
 		return (
 			<li className="trackerlist-item">
-				<OptionalNavLink to={linkGen(item)} className="trackerlist-item__link">
+				<OptionalNavLink
+					to={linkGen(item)}
+					className={classnames({
+						'trackerlist-item__link': true,
+						'trackerlist-item__link--dead': item.stats && item.currentHP <= 0,
+						'trackerlist-item__link--player': !item.stats,
+					})}
+				>
 					<span
 						className={classnames({
 							'trackerlist-item__link__name': true,
