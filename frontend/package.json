@@ -8,7 +8,7 @@
     "connected-react-router": "^4.3.0",
     "history": "^4.7.2",
     "immer": "^1.7.2",
-    "lodash": "^4.17.13",
+    "lodash": "^4.17.21",
     "node-sass": "^4.9.3",
     "react": "^16.4.1",
     "react-dom": "^16.4.1",
